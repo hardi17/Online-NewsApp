@@ -4,6 +4,7 @@
     package="com.hardi.newsapp">
 
     <application
+        android:name="com.hardi.NewsApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,7 +15,10 @@
         android:theme="@style/Theme.NewsAppMVVMArchitecture"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.topheadline.TopHeadlineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.mainactivity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
