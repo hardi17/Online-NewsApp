@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hardi.newsapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="com.hardi.NewsApplication"
         android:allowBackup="true"
@@ -12,7 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NewsAppMVVMArchitecture"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
             android:name=".ui.topheadline.TopHeadlineActivity"

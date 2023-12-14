@@ -6,4 +6,5 @@
     android:layout_height="match_parent"
     tools:context=".ui.topheadline.TopHeadlineActivity">
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>
