@@ -7,7 +7,7 @@ import com.hardi.newsapp.di.module.ApplicationModule
 
 class NewsApplication : Application() {
 
-    lateinit var applicationComponent : ApplicationComponent
+    private lateinit var applicationComponent : ApplicationComponent
 
     override fun onCreate() {
         super.onCreate()
