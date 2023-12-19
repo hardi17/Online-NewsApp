@@ -7,6 +7,10 @@ data class Article(
     val title: String = "",
     @SerializedName("description")
     val description: String = "",
+    @SerializedName("author")
+    val author: String = "",
+    @SerializedName("publishedAt")
+    val publishedAt: String = "",
     @SerializedName("url")
     val url: String = "",
     @SerializedName("urlToImage")

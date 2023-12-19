@@ -4,10 +4,13 @@ import android.app.Activity
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.hardi.newsapp.data.repository.NewsSourcesRepository
 import com.hardi.newsapp.data.repository.TopHeadlineRepository
 import com.hardi.newsapp.di.ActivityContext
 import com.hardi.newsapp.di.ActivityScope
 import com.hardi.newsapp.ui.base.ViewModelProviderFactory
+import com.hardi.newsapp.ui.newssources.NewsSourcesAdapter
+import com.hardi.newsapp.ui.newssources.NewsSourcesViewModel
 import com.hardi.newsapp.ui.topheadline.TopHeadlineAdapter
 import com.hardi.newsapp.ui.topheadline.TopHeadlineViewModel
 import dagger.Module
@@ -32,4 +35,15 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     fun provideTopHeadlineAdapter() = TopHeadlineAdapter(ArrayList())
+
+    @Provides
+    fun provideNewsSourcesListViewModel(newsSourcesRepository: NewsSourcesRepository): NewsSourcesViewModel{
+        return ViewModelProvider(activity,
+            ViewModelProviderFactory(NewsSourcesViewModel::class){
+                NewsSourcesViewModel(newsSourcesRepository)
+            })[NewsSourcesViewModel::class.java]
+    }
+
+    @Provides
+    fun provideNewsSourcesAdapter() = NewsSourcesAdapter(ArrayList())
 }

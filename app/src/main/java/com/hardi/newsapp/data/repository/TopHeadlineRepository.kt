@@ -18,4 +18,12 @@ class TopHeadlineRepository @Inject constructor(private val networkService: Netw
             it.articles
         }
     }
+
+    fun getNewsBySources(sources : String): Flow<List<Article>>{
+        return flow {
+            emit(networkService.getNewsBySources(sources))
+        }.map {
+            it.articles
+        }
+    }
 }
