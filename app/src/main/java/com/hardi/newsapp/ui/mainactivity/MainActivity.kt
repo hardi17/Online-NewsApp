@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.hardi.newsapp.R
 import com.hardi.newsapp.databinding.ActivityMainBinding
 import com.hardi.newsapp.ui.topheadline.TopHeadlineActivity
+import com.hardi.newsapp.utils.AppConstant.COUNTRY
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -19,8 +20,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.toolbar.txtTitle.text =
-            applicationContext.resources.getString(R.string.top_headlines)
+        binding.toolbar.txtTitle.text = applicationContext.resources.getString(R.string.home)
         setUpClickListener()
     }
 
@@ -35,8 +35,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View) {
         when (view.id) {
             R.id.btn_topHeadlines -> {
-                val intent = Intent(this@MainActivity, TopHeadlineActivity::class.java)
-                startActivity(intent)
+                startActivity(TopHeadlineActivity.getStartIntent(this@MainActivity, COUNTRY))
             }
             R.id.btn_newSources -> {
                 Log.d("", "New sources")

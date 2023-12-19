@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">NewsApp-MVVM-Architecture</string>
 
+    <string name="home">Home</string>
     <string name="top_headlines">Top Headlines</string>
     <string name="new_sources">News Sources</string>
     <string name="countries">Countries</string>
@@ -9,4 +10,6 @@
 
     <string name="country_selection">Country Selection</string>
     <string name="language_Selection">Language Selection</string>
+
+    <string name="error_msg_image">Not Image URL found</string>
 </resources>
