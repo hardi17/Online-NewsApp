@@ -28,7 +28,7 @@ class TopHeadlineActivity : AppCompatActivity() {
     lateinit var topHeadlineAdapter: TopHeadlineAdapter
 
     @Inject
-    lateinit var newsListViewModel: TopHeadlineViewModel
+    lateinit var topHeadlineViewModel: TopHeadlineViewModel
 
     companion object{
 
@@ -62,7 +62,7 @@ class TopHeadlineActivity : AppCompatActivity() {
     private fun getIntentDataAnbdFetchData() {
         val country = intent.getStringExtra(EXTRAS_COUNTRY)
         country?.let{
-            newsListViewModel.fetchNews(country)
+            topHeadlineViewModel.fetchNews(country)
         }
     }
 
@@ -83,7 +83,7 @@ class TopHeadlineActivity : AppCompatActivity() {
     private fun setupObserver() {
         lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.STARTED){
-                newsListViewModel.uiState.collect{
+                topHeadlineViewModel.uiState.collect{
                     when(it){
                             is UiState.Success -> {
                                 binding.progressBar.visibility = View.GONE

@@ -16,6 +16,9 @@ class NewsSourcesAdapter(
         RecyclerView.ViewHolder(binding.root){
         fun bind(newsSource : NewsSource){
             binding.tvNewsSource.text = newsSource.name
+            itemView.setOnClickListener{
+                it.context.startActivity(NewsListActivity.getStartIntent(it.context, newsSource.id!!))
+            }
         }
     }
 
