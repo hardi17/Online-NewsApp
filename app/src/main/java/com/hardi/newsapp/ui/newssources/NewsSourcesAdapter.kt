@@ -17,7 +17,7 @@ class NewsSourcesAdapter(
         fun bind(newsSource : NewsSource){
             binding.tvNewsSource.text = newsSource.name
             itemView.setOnClickListener{
-                it.context.startActivity(NewsListActivity.getStartIntent(it.context, newsSource.id!!))
+                it.context.startActivity(NewsListActivity.getStartIntent(it.context, newsSource.id!!, ""))
             }
         }
     }

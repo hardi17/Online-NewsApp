@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import com.hardi.newsapp.R
 import com.hardi.newsapp.databinding.ActivityMainBinding
+import com.hardi.newsapp.ui.countryorlanguage.CountryOrLanguageActivity
 import com.hardi.newsapp.ui.newssources.NewsSourcesActivity
 import com.hardi.newsapp.ui.topheadline.TopHeadlineActivity
 import com.hardi.newsapp.utils.AppConstant.COUNTRY
@@ -42,10 +43,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(Intent(this@MainActivity,NewsSourcesActivity::class.java))
             }
             R.id.btn_country -> {
-                Log.d("", "Country selection")
+                startActivity(CountryOrLanguageActivity.getStartIntent(this@MainActivity, true))
             }
             R.id.btn_languages -> {
-                Log.d("", "Language selection")
+//                startActivity(CountryOrLanguageActivity.getStartIntent(this@MainActivity, false))
             }
             R.id.btn_search -> {
                 Log.d("", "Search more news")

@@ -11,6 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hardi.NewsApplication
+import com.hardi.newsapp.R
 import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.databinding.ActivityNewsListBinding
 import com.hardi.newsapp.di.component.DaggerActivityComponent
@@ -32,11 +33,13 @@ class NewsListActivity : AppCompatActivity() {
     companion object{
 
         const val SOURCE_ITEM = "SOURCE_ITEM"
+        const val COUNTRY_CODE = "COUNTRY_CODE"
 
-        fun getStartIntent(context: Context, sources: String) : Intent {
+        fun getStartIntent(context: Context, sources: String, countryCode: String) : Intent {
             return Intent(context, NewsListActivity::class.java)
                 .apply {
                     putExtra(SOURCE_ITEM,sources)
+                    putExtra(COUNTRY_CODE,countryCode)
                 }
         }
     }
@@ -54,9 +57,13 @@ class NewsListActivity : AppCompatActivity() {
     /*Getting intent data which we are pssing throught any other activity*/
     private fun getIntentDataAnbdFetchData() {
         val source = intent.getStringExtra(SOURCE_ITEM)
-        source?.let{
-            binding.toolbar.txtTitle.text = source
+        val countryCode = intent.getStringExtra(COUNTRY_CODE)
+       if(!source.isNullOrBlank()){
+            binding.toolbar.txtTitle.text = resources.getString(R.string.news_list_by_source)
             newsListViewModel.fetchSource(source)
+        }else if(!countryCode.isNullOrBlank()){
+            binding.toolbar.txtTitle.text = resources.getString(R.string.news_list_by_country)
+            newsListViewModel.fetchNewsByCountry(countryCode)
         }
     }
 

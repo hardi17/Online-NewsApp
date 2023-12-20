@@ -27,5 +27,16 @@ class NewsListViewModel(private val topHeadlineRepository: TopHeadlineRepository
         }
     }
 
+    fun fetchNewsByCountry(sources : String){
+        viewModelScope.launch {
+            topHeadlineRepository.getNewsByCountry(sources)
+                .catch { e ->
+                    _uiState.value = UiState.Error(e.toString())
+                }.collect(){
+                    _uiState.value = UiState.Success(it)
+                }
+        }
+    }
+
 
 }

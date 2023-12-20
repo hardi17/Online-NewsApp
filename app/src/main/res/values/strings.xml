@@ -8,8 +8,126 @@
     <string name="languages">Languages</string>
     <string name="search">Search</string>
 
+    <string name="news_list_by_source">News by source</string>
+    <string name="news_list_by_country">News by country</string>
+    <string name="news_list_by_language">News by language</string>
+
     <string name="country_selection">Country Selection</string>
     <string name="language_Selection">Language Selection</string>
 
     <string name="error_msg_image">Not Image URL found</string>
+
+    <string-array name="country_name">
+        <item>Argentina</item>
+        <item>Australia</item>
+        <item>Austria</item>
+        <item>Belgium</item>
+        <item>Brazil</item>
+        <item>Bulgaria</item>
+        <item>Canada</item>
+        <item>China</item>
+        <item>Colombia</item>
+        <item>Cuba</item>
+        <item>Czech Republic</item>
+        <item>Egypt</item>
+        <item>France</item>
+        <item>Germany</item>
+        <item>Greece</item>
+        <item>Hong Kong</item>
+        <item>Hungary</item>
+        <item>India</item>
+        <item>Indonesia</item>
+        <item>Ireland</item>
+        <item>Israel</item>
+        <item>Italy</item>
+        <item>Japan</item>
+        <item>Latvia</item>
+        <item>Lithuania</item>
+        <item>Malaysia</item>
+        <item>Mexico</item>
+        <item>Morocco</item>
+        <item>Netherlands</item>
+        <item>New Zealand</item>
+        <item>Nigeria</item>
+        <item>Norway</item>
+        <item>Philippines</item>
+        <item>Poland</item>
+        <item>Portugal</item>
+        <item>Romania</item>
+        <item>Russia</item>
+        <item>Saudi Arabia</item>
+        <item>Serbia</item>
+        <item>Singapore</item>
+        <item>Slovakia</item>
+        <item>Slovenia</item>
+        <item>South Africa</item>
+        <item>South Korea</item>
+        <item>Sweden</item>
+        <item>Switzerland</item>
+        <item>Taiwan</item>
+        <item>Thailand</item>
+        <item>Turkey</item>
+        <item>UAE</item>
+        <item>Ukraine</item>
+        <item>United Kingdom</item>
+        <item>United States</item>
+        <item>Venezuela</item>
+    </string-array>
+
+    <string-array name="country_code">
+        <item>AR</item>
+        <item>AU</item>
+        <item>AT</item>
+        <item>BE</item>
+        <item>BR</item>
+        <item>BG</item>
+        <item>CA</item>
+        <item>CN</item>
+        <item>CO</item>
+        <item>CU</item>
+        <item>CZ</item>
+        <item>EG</item>
+        <item>FR</item>
+        <item>DE</item>
+        <item>GR</item>
+        <item>HK</item>
+        <item>HU</item>
+        <item>IN</item>
+        <item>ID</item>
+        <item>IE</item>
+        <item>IL</item>
+        <item>IT</item>
+        <item>JP</item>
+        <item>LV</item>
+        <item>LT</item>
+        <item>MY</item>
+        <item>MX</item>
+        <item>MA</item>
+        <item>NL</item>
+        <item>NZ</item>
+        <item>NG</item>
+        <item>NO</item>
+        <item>PH</item>
+        <item>PL</item>
+        <item>PT</item>
+        <item>RO</item>
+        <item>RU</item>
+        <item>SA</item>
+        <item>RS</item>
+        <item>SG</item>
+        <item>SK</item>
+        <item>SI</item>
+        <item>ZA</item>
+        <item>KR</item>
+        <item>SE</item>
+        <item>CH</item>
+        <item>TW</item>
+        <item>TH</item>
+        <item>TR</item>
+        <item>AE</item>
+        <item>UA</item>
+        <item>GB</item>
+        <item>US</item>
+        <item>VE</item>
+    </string-array>
 </resources>
