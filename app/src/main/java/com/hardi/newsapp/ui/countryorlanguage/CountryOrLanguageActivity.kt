@@ -7,54 +7,38 @@ import android.os.Bundle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hardi.newsapp.R
-import com.hardi.newsapp.data.model.Country
+import com.hardi.newsapp.data.model.CountryOrLanguage
 import com.hardi.newsapp.databinding.ActivityCountryOrLanguageBinding
-import com.hardi.newsapp.ui.newslist.NewsListActivity
 
 class CountryOrLanguageActivity : AppCompatActivity() {
 
-    companion object{
+    companion object {
 
         const val EXTRA_FLAG = "EXTRA_FLAG"
 
-        fun getStartIntent(context: Context, flag: Boolean) : Intent {
+        fun getStartIntent(context: Context, isCountry: Boolean): Intent {
             return Intent(context, CountryOrLanguageActivity::class.java)
                 .apply {
-                    putExtra(EXTRA_FLAG,flag)
+                    putExtra(EXTRA_FLAG, isCountry)
                 }
         }
     }
 
     private lateinit var binding: ActivityCountryOrLanguageBinding
 
-    private lateinit var adapter: CountryOrLanguageAdapter
+    private lateinit var countryAdapter: CountryOrLanguageAdapter
+
+    private lateinit var resultList: List<CountryOrLanguage>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityCountryOrLanguageBinding.inflate(layoutInflater)
+        binding = ActivityCountryOrLanguageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setRecyclerView()
         getIntentDataAndFetch()
-        createCountryListAndSet()
     }
 
-    private fun getIntentDataAndFetch() {
-        val flag = intent.getBooleanExtra(EXTRA_FLAG,true)
-        if(flag){
-            binding.toolbar.txtTitle.text = resources.getString(R.string.country_selection)
-        }else{
-            binding.toolbar.txtTitle.text = resources.getString(R.string.language_Selection)
-        }
-    }
-
-    private fun createCountryListAndSet() {
-        val countries = resources.getStringArray(R.array.country_name)
-        val countryCodes = resources.getStringArray(R.array.country_code)
-
-        val countryList = countries.mapIndexed { index, name ->
-            Country(name, countryCodes[index])
-        }
-
-        adapter = CountryOrLanguageAdapter(countryList)
+    private fun setRecyclerView() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.addItemDecoration(
             DividerItemDecoration(
@@ -62,8 +46,37 @@ class CountryOrLanguageActivity : AppCompatActivity() {
                 (binding.recyclerView.layoutManager as LinearLayoutManager).orientation
             )
         )
+    }
 
-        binding.recyclerView.adapter = adapter
+    private fun getIntentDataAndFetch() {
+        val isCountry = intent.getBooleanExtra(EXTRA_FLAG, true)
+        if (isCountry) {
+            binding.toolbar.txtTitle.text = resources.getString(R.string.country_selection)
+            createListAndSet(isCountry)
+        } else {
+            binding.toolbar.txtTitle.text = resources.getString(R.string.language_Selection)
+            createListAndSet(isCountry)
+        }
+    }
 
+    private fun createListAndSet(flag: Boolean) {
+        if (flag) {
+            val names = resources.getStringArray(R.array.country_name)
+            val codes = resources.getStringArray(R.array.country_code)
+
+            resultList = names.mapIndexed { index, names ->
+                CountryOrLanguage(names, codes[index])
+            }
+        } else {
+            val names = resources.getStringArray(R.array.language_names)
+            val codes = resources.getStringArray(R.array.language_codes)
+
+            resultList = names.mapIndexed { index, names ->
+                CountryOrLanguage(names, codes[index])
+            }
+        }
+
+        countryAdapter = CountryOrLanguageAdapter(resultList,flag)
+        binding.recyclerView.adapter = countryAdapter
     }
 }

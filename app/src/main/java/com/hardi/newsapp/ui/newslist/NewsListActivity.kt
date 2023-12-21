@@ -34,12 +34,14 @@ class NewsListActivity : AppCompatActivity() {
 
         const val SOURCE_ITEM = "SOURCE_ITEM"
         const val COUNTRY_CODE = "COUNTRY_CODE"
+        const val LANGUAGE_CODE = "LANGUAGE_CODE"
 
-        fun getStartIntent(context: Context, sources: String, countryCode: String) : Intent {
+        fun getStartIntent(context: Context, sources: String, countryCode: String, languageCode: String) : Intent {
             return Intent(context, NewsListActivity::class.java)
                 .apply {
                     putExtra(SOURCE_ITEM,sources)
                     putExtra(COUNTRY_CODE,countryCode)
+                    putExtra(LANGUAGE_CODE,languageCode)
                 }
         }
     }
@@ -58,13 +60,17 @@ class NewsListActivity : AppCompatActivity() {
     private fun getIntentDataAnbdFetchData() {
         val source = intent.getStringExtra(SOURCE_ITEM)
         val countryCode = intent.getStringExtra(COUNTRY_CODE)
+        val languageCode = intent.getStringExtra(LANGUAGE_CODE)
        if(!source.isNullOrBlank()){
             binding.toolbar.txtTitle.text = resources.getString(R.string.news_list_by_source)
             newsListViewModel.fetchSource(source)
         }else if(!countryCode.isNullOrBlank()){
             binding.toolbar.txtTitle.text = resources.getString(R.string.news_list_by_country)
             newsListViewModel.fetchNewsByCountry(countryCode)
-        }
+        }else{
+           binding.toolbar.txtTitle.text = resources.getString(R.string.news_list_by_language)
+           newsListViewModel.fetchNewsByLanguage(languageCode!!)
+       }
     }
 
     /*Setting up recyclerview layout and adding adapter*/

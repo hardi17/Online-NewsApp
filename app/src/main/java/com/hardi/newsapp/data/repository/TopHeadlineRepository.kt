@@ -34,4 +34,12 @@ class TopHeadlineRepository @Inject constructor(private val networkService: Netw
             it.articles
         }
     }
+
+    fun getNewsByLanguage(langauge : String): Flow<List<Article>>{
+        return flow {
+            emit(networkService.getNewsByLanguage(langauge))
+        }.map {
+            it.articles
+        }
+    }
 }

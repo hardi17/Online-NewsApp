@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(CountryOrLanguageActivity.getStartIntent(this@MainActivity, true))
             }
             R.id.btn_languages -> {
-//                startActivity(CountryOrLanguageActivity.getStartIntent(this@MainActivity, false))
+                startActivity(CountryOrLanguageActivity.getStartIntent(this@MainActivity, false))
             }
             R.id.btn_search -> {
                 Log.d("", "Search more news")
