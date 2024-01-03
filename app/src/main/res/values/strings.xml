@@ -7,6 +7,7 @@
     <string name="countries">Countries</string>
     <string name="languages">Languages</string>
     <string name="search">Search</string>
+    <string name="search_here">Search news here</string>
 
     <string name="news_list_by_source">News by source</string>
     <string name="news_list_by_country">News by country</string>
@@ -162,4 +163,7 @@
         <item>sv</item>
         <item>zh</item>
     </string-array>
+
+    <!--     -->
+    <string name="internet_error">Ooops, \n Something went wrong \n please check your network \n and try once again.</string>
 </resources>

@@ -68,7 +68,7 @@ class TopHeadlineActivity : AppCompatActivity() {
 
     /*Setting up recyclerview layout and adding adapter*/
     private fun setUpUI() {
-        binding.toolbar.txtTitle.text = applicationContext.resources.getString(R.string.top_headlines)
+        binding.toolbar.txtTitle.text = getString(R.string.top_headlines)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.addItemDecoration(
             DividerItemDecoration(
@@ -98,7 +98,7 @@ class TopHeadlineActivity : AppCompatActivity() {
                                 binding.progressBar.visibility = View.GONE
                                 binding.recyclerView.visibility = View.GONE
                                 binding.tvError.visibility = View.VISIBLE
-                                binding.tvError.text = it.message
+                                binding.tvError.text = getString(R.string.internet_error)
                             }
                     }
                 }

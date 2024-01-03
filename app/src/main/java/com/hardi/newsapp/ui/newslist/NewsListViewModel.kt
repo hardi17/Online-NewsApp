@@ -49,5 +49,4 @@ class NewsListViewModel(private val topHeadlineRepository: TopHeadlineRepository
         }
     }
 
-
 }

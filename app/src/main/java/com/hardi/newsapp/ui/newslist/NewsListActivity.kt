@@ -104,7 +104,7 @@ class NewsListActivity : AppCompatActivity() {
                             binding.progressBar.visibility = View.GONE
                             binding.recyclerView.visibility = View.GONE
                             binding.tvError.visibility = View.VISIBLE
-                            binding.tvError.text = it.message
+                            binding.tvError.text = getString(R.string.internet_error)
                         }
                     }
                 }

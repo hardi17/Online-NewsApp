@@ -16,10 +16,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
-        <activity android:name=".ui.countryorlanguage.CountryOrLanguageActivity"/>
-        <activity android:name=".ui.newslist.NewsListActivity" />
-        <activity android:name=".ui.newssources.NewsSourcesActivity" />
-        <activity android:name=".ui.topheadline.TopHeadlineActivity" />
+        <activity
+            android:name=".ui.searchactivity.SearchActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.countryorlanguage.CountryOrLanguageActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.newslist.NewsListActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.newssources.NewsSourcesActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.topheadline.TopHeadlineActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.mainactivity.MainActivity"
             android:exported="true">

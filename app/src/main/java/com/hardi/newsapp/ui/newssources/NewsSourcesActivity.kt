@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hardi.NewsApplication
 import com.hardi.newsapp.R
-import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.data.model.NewsSource
 import com.hardi.newsapp.databinding.ActivityNewsSourcesBinding
 import com.hardi.newsapp.di.component.DaggerActivityComponent
@@ -73,7 +72,7 @@ class NewsSourcesActivity : AppCompatActivity() {
                             binding.progressBar.visibility = View.GONE
                             binding.recyclerView.visibility = View.GONE
                             binding.tvError.visibility = View.VISIBLE
-                            binding.tvError.text = it.message
+                            binding.tvError.text = getString(R.string.internet_error)
                         }
                     }
                 }
