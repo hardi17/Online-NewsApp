@@ -4,12 +4,13 @@ import android.app.Activity
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.hardi.newsapp.data.repository.NewsSourcesRepository
-import com.hardi.newsapp.data.repository.SearchNewsRepository
-import com.hardi.newsapp.data.repository.TopHeadlineRepository
+import com.hardi.newsapp.data.repository.*
 import com.hardi.newsapp.di.ActivityContext
-import com.hardi.newsapp.di.ActivityScope
 import com.hardi.newsapp.ui.base.ViewModelProviderFactory
+import com.hardi.newsapp.ui.countryactivity.CountriesAdapter
+import com.hardi.newsapp.ui.countryactivity.CountriesViewModel
+import com.hardi.newsapp.ui.languageactivity.LanguagesAdapter
+import com.hardi.newsapp.ui.languageactivity.LanguagesViewModel
 import com.hardi.newsapp.ui.newslist.NewsListAdapter
 import com.hardi.newsapp.ui.newslist.NewsListViewModel
 import com.hardi.newsapp.ui.newssources.NewsSourcesAdapter
@@ -51,6 +52,28 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     fun provideNewsSourcesAdapter() = NewsSourcesAdapter(ArrayList())
+
+    @Provides
+    fun provideCountriesListViewModel(countriesRepository: CountriesRepository): CountriesViewModel{
+        return ViewModelProvider(activity,
+            ViewModelProviderFactory(CountriesViewModel::class){
+                CountriesViewModel(countriesRepository)
+            })[CountriesViewModel::class.java]
+    }
+
+    @Provides
+    fun provideCountriesAdapter() = CountriesAdapter(ArrayList())
+
+    @Provides
+    fun provideLanguagesListViewModel(languagesRepository: LanguagesRepository): LanguagesViewModel{
+        return ViewModelProvider(activity,
+            ViewModelProviderFactory(LanguagesViewModel::class){
+                LanguagesViewModel(languagesRepository)
+            })[LanguagesViewModel::class.java]
+    }
+
+    @Provides
+    fun provideLanguagesAdapter() = LanguagesAdapter(ArrayList())
 
     @Provides
     fun provideSourcesViewModel(topHeadlineRepository: TopHeadlineRepository): NewsListViewModel {

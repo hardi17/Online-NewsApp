@@ -1,15 +1,13 @@
 package com.hardi.newsapp.ui.mainactivity
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.hardi.newsapp.R
 import com.hardi.newsapp.databinding.ActivityMainBinding
-import com.hardi.newsapp.ui.countryorlanguage.CountryOrLanguageActivity
+import com.hardi.newsapp.ui.countryactivity.CountriesActivity
+import com.hardi.newsapp.ui.languageactivity.LanguagesActivity
 import com.hardi.newsapp.ui.newssources.NewsSourcesActivity
 import com.hardi.newsapp.ui.searchactivity.SearchActivity
 import com.hardi.newsapp.ui.topheadline.TopHeadlineActivity
@@ -44,10 +42,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(Intent(this@MainActivity,NewsSourcesActivity::class.java))
             }
             R.id.btn_country -> {
-                startActivity(CountryOrLanguageActivity.getStartIntent(this@MainActivity, true))
+                startActivity(Intent(this@MainActivity,CountriesActivity::class.java))
             }
             R.id.btn_languages -> {
-                startActivity(CountryOrLanguageActivity.getStartIntent(this@MainActivity, false))
+                startActivity(Intent(this@MainActivity,LanguagesActivity::class.java))
             }
             R.id.btn_search -> {
                 startActivity(Intent(this@MainActivity,SearchActivity::class.java))

@@ -164,6 +164,7 @@
         <item>zh</item>
     </string-array>
 
-    <!--     -->
+    <!--Error messages-->
+    <string name="no_data_found">No news available according to your country/language selection or search result.</string>
     <string name="internet_error">Ooops, \n Something went wrong \n please check your network \n and try once again.</string>
 </resources>

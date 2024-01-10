@@ -1,4 +1,4 @@
-package com.hardi.newsapp.ui.countryorlanguage
+package com.hardi.newsapp.ui.languageactivity
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,35 +7,23 @@ import com.hardi.newsapp.data.model.CountryOrLanguage
 import com.hardi.newsapp.databinding.CountryOrLanguageLayoutBinding
 import com.hardi.newsapp.ui.newslist.NewsListActivity
 
-class CountryOrLanguageAdapter(
-    private val countryOrLangList: List<CountryOrLanguage>,
-    private val isCountry: Boolean
-) : RecyclerView.Adapter<CountryOrLanguageAdapter.DataViewHolder>() {
+class LanguagesAdapter(
+    private val countryOrLangList: List<CountryOrLanguage>
+) : RecyclerView.Adapter<LanguagesAdapter.DataViewHolder>() {
 
     class DataViewHolder(private val binding: CountryOrLanguageLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(countryOrLangList: CountryOrLanguage, isCountry: Boolean) {
+        fun bind(countryOrLangList: CountryOrLanguage) {
             binding.tvCountryOrLanguageName.text = countryOrLangList.name
             itemView.setOnClickListener {
-                if (isCountry) {
-                    it.context.startActivity(
-                        NewsListActivity.getStartIntent(
-                            it.context,
-                            "",
-                            countryOrLangList.code,
-                            ""
-                        )
+                it.context.startActivity(
+                    NewsListActivity.getStartIntent(
+                        it.context,
+                        "",
+                        "",
+                        countryOrLangList.code
                     )
-                } else {
-                    it.context.startActivity(
-                        NewsListActivity.getStartIntent(
-                            it.context,
-                            "",
-                            "",
-                            countryOrLangList.code
-                        )
-                    )
-                }
+                )
             }
         }
 
@@ -52,7 +40,7 @@ class CountryOrLanguageAdapter(
     }
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        holder.bind(countryOrLangList[position],isCountry)
+        holder.bind(countryOrLangList[position])
     }
 
     override fun getItemCount(): Int {

@@ -20,7 +20,10 @@
             android:name=".ui.searchactivity.SearchActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.countryorlanguage.CountryOrLanguageActivity"
+            android:name=".ui.languageactivity.LanguagesActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.countryactivity.CountriesActivity"
             android:launchMode="singleTask" />
         <activity
             android:name=".ui.newslist.NewsListActivity"

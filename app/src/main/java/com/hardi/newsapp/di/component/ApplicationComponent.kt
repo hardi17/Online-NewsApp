@@ -3,9 +3,7 @@ package com.hardi.newsapp.di.component
 import android.content.Context
 import com.hardi.NewsApplication
 import com.hardi.newsapp.data.api.NetworkService
-import com.hardi.newsapp.data.repository.NewsSourcesRepository
-import com.hardi.newsapp.data.repository.SearchNewsRepository
-import com.hardi.newsapp.data.repository.TopHeadlineRepository
+import com.hardi.newsapp.data.repository.*
 import com.hardi.newsapp.di.ApplicationContext
 import com.hardi.newsapp.di.module.ApplicationModule
 import dagger.Component
@@ -27,5 +25,9 @@ interface ApplicationComponent {
     fun getNewsSourcesRepository() : NewsSourcesRepository
 
     fun getSearchNewsRepository() : SearchNewsRepository
+
+    fun getCountriesRepository() : CountriesRepository
+
+    fun getLanguagesRepository() : LanguagesRepository
 
 }
