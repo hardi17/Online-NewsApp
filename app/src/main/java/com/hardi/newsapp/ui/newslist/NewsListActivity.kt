@@ -30,18 +30,23 @@ class NewsListActivity : AppCompatActivity() {
     @Inject
     lateinit var newsListViewModel: NewsListViewModel
 
-    companion object{
+    companion object {
 
         const val SOURCE_ITEM = "SOURCE_ITEM"
         const val COUNTRY_CODE = "COUNTRY_CODE"
         const val LANGUAGE_CODE = "LANGUAGE_CODE"
 
-        fun getStartIntent(context: Context, sources: String, countryCode: String, languageCode: String) : Intent {
+        fun getStartIntent(
+            context: Context,
+            sources: String,
+            countryCode: String,
+            languageCode: String
+        ): Intent {
             return Intent(context, NewsListActivity::class.java)
                 .apply {
-                    putExtra(SOURCE_ITEM,sources)
-                    putExtra(COUNTRY_CODE,countryCode)
-                    putExtra(LANGUAGE_CODE,languageCode)
+                    putExtra(SOURCE_ITEM, sources)
+                    putExtra(COUNTRY_CODE, countryCode)
+                    putExtra(LANGUAGE_CODE, languageCode)
                 }
         }
     }
@@ -49,7 +54,7 @@ class NewsListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
         super.onCreate(savedInstanceState)
-        binding= ActivityNewsListBinding.inflate(layoutInflater)
+        binding = ActivityNewsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         getIntentDataAnbdFetchData()
         setUpUI()
@@ -61,16 +66,16 @@ class NewsListActivity : AppCompatActivity() {
         val source = intent.getStringExtra(SOURCE_ITEM)
         val countryCode = intent.getStringExtra(COUNTRY_CODE)
         val languageCode = intent.getStringExtra(LANGUAGE_CODE)
-       if(!source.isNullOrBlank()){
+        if (!source.isNullOrBlank()) {
             binding.toolbar.txtTitle.text = resources.getString(R.string.news_list_by_source)
             newsListViewModel.fetchSource(source)
-        }else if(!countryCode.isNullOrBlank()){
+        } else if (!countryCode.isNullOrBlank()) {
             binding.toolbar.txtTitle.text = resources.getString(R.string.news_list_by_country)
             newsListViewModel.fetchNewsByCountry(countryCode)
-        }else{
-           binding.toolbar.txtTitle.text = resources.getString(R.string.news_list_by_language)
-           newsListViewModel.fetchNewsByLanguage(languageCode!!)
-       }
+        } else {
+            binding.toolbar.txtTitle.text = resources.getString(R.string.news_list_by_language)
+            newsListViewModel.fetchNewsByLanguage(languageCode!!)
+        }
     }
 
     /*Setting up recyclerview layout and adding adapter*/
@@ -87,20 +92,29 @@ class NewsListActivity : AppCompatActivity() {
 
     /*Using coroutine execute code in synchronized way*/
     private fun setupObserver() {
-        lifecycleScope.launch{
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                newsListViewModel.uiState.collect{
-                    when(it){
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                newsListViewModel.uiState.collect {
+                    when (it) {
                         is UiState.Success -> {
-                            binding.progressBar.visibility = View.GONE
-                            binding.tvError.visibility = View.GONE
-                            renderList(it.data)
-                            binding.recyclerView.visibility = View.VISIBLE
-                        }is UiState.Loading -> {
+                            if (it.data.isEmpty()) {
+                                binding.progressBar.visibility = View.GONE
+                                binding.recyclerView.visibility = View.GONE
+                                binding.tvError.visibility = View.VISIBLE
+                                binding.tvError.text = getString(R.string.no_data_found)
+                            } else {
+                                binding.progressBar.visibility = View.GONE
+                                binding.tvError.visibility = View.GONE
+                                renderList(it.data)
+                                binding.recyclerView.visibility = View.VISIBLE
+                            }
+                        }
+                        is UiState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.recyclerView.visibility = View.GONE
                             binding.tvError.visibility = View.GONE
-                        }is UiState.Error -> {
+                        }
+                        is UiState.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.recyclerView.visibility = View.GONE
                             binding.tvError.visibility = View.VISIBLE

@@ -56,7 +56,7 @@ class SearchViewAdapter(
     }
 
     fun addData(newsItem: List<Article>) {
-        articleList.addAll(newsItem)
         articleList.clear()
+        articleList.addAll(newsItem)
     }
 }

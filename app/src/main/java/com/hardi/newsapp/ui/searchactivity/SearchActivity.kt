@@ -32,7 +32,7 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
         super.onCreate(savedInstanceState)
-        binding= ActivitySearchBinding.inflate(layoutInflater)
+        binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setUpUI()
         getSearchResult()
@@ -59,9 +59,8 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun getSearchResult() {
-        binding.searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { viewModel.fetchEverything(it) }
                 return true
             }
 
@@ -75,25 +74,34 @@ class SearchActivity : AppCompatActivity() {
 
     /*Using coroutine execute code in synchronized way*/
     private fun setupObserver() {
-        lifecycleScope.launch{
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.uiState.collect{
-                    when(it){
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+                    when (it) {
                         is UiState.Success -> {
-                            binding.progressBar.visibility = View.GONE
+                            if (it.data.isEmpty()) {
+                                binding.progressBar.visibility = View.GONE
+                                binding.recyclerView.visibility = View.GONE
+                                binding.tvError.visibility = View.VISIBLE
+                                binding.tvError.text = getString(R.string.no_data_found)
+                            } else {
+                                binding.progressBar.visibility = View.GONE
+                                binding.tvError.visibility = View.GONE
+                                renderList(it.data)
+                                binding.recyclerView.visibility = View.VISIBLE
+                            }
+                        }
+                        is UiState.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                            binding.recyclerView.visibility = View.GONE
                             binding.tvError.visibility = View.GONE
-                            renderList(it.data)
-                            binding.recyclerView.visibility = View.VISIBLE
-                        }is UiState.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                        binding.recyclerView.visibility = View.GONE
-                        binding.tvError.visibility = View.GONE
-                    }is UiState.Error -> {
-                        binding.progressBar.visibility = View.GONE
-                        binding.recyclerView.visibility = View.GONE
-                        binding.tvError.visibility = View.VISIBLE
-                        binding.tvError.text = it.message
-                    }
+                        }
+                        is UiState.Error -> {
+                            binding.progressBar.visibility = View.GONE
+                            binding.recyclerView.visibility = View.GONE
+                            binding.tvError.visibility = View.VISIBLE
+                            binding.tvError.text = it.message
+                        }
                     }
                 }
             }
