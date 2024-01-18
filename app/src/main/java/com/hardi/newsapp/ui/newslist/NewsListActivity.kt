@@ -20,7 +20,7 @@ import com.hardi.newsapp.ui.base.UiState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NewsListActivity : AppCompatActivity() {
+class NewsListActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityNewsListBinding
 
@@ -100,11 +100,11 @@ class NewsListActivity : AppCompatActivity() {
                             if (it.data.isEmpty()) {
                                 binding.progressBar.visibility = View.GONE
                                 binding.recyclerView.visibility = View.GONE
-                                binding.tvError.visibility = View.VISIBLE
+                                binding.rlErrorLayout.visibility = View.VISIBLE
                                 binding.tvError.text = getString(R.string.no_data_found)
                             } else {
                                 binding.progressBar.visibility = View.GONE
-                                binding.tvError.visibility = View.GONE
+                                binding.rlErrorLayout.visibility = View.GONE
                                 renderList(it.data)
                                 binding.recyclerView.visibility = View.VISIBLE
                             }
@@ -112,19 +112,26 @@ class NewsListActivity : AppCompatActivity() {
                         is UiState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.recyclerView.visibility = View.GONE
-                            binding.tvError.visibility = View.GONE
+                            binding.rlErrorLayout.visibility = View.GONE
                         }
                         is UiState.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.recyclerView.visibility = View.GONE
-                            binding.tvError.visibility = View.VISIBLE
-                            binding.tvError.text = getString(R.string.internet_error)
+                            binding.rlErrorLayout.visibility = View.VISIBLE
+                            binding.btnTryAgain.setOnClickListener(this@NewsListActivity)
                         }
                     }
                 }
             }
         }
+    }
 
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.btn_tryAgain ->{
+                setupObserver()
+            }
+        }
     }
 
     private fun renderList(articleList: List<Article>) {

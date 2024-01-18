@@ -11,7 +11,7 @@ import com.hardi.newsapp.ui.languageactivity.LanguagesActivity
 import com.hardi.newsapp.ui.newssources.NewsSourcesActivity
 import com.hardi.newsapp.ui.searchactivity.SearchActivity
 import com.hardi.newsapp.ui.topheadline.TopHeadlineActivity
-import com.hardi.newsapp.utils.AppConstant.COUNTRY
+import com.hardi.newsapp.utils.AppConstant.DEFAULT_COUNTRY
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View) {
         when (view.id) {
             R.id.btn_topHeadlines -> {
-                startActivity(TopHeadlineActivity.getStartIntent(this@MainActivity, COUNTRY))
+                startActivity(TopHeadlineActivity.getStartIntent(this@MainActivity, DEFAULT_COUNTRY))
             }
             R.id.btn_newSources -> {
                 startActivity(Intent(this@MainActivity,NewsSourcesActivity::class.java))

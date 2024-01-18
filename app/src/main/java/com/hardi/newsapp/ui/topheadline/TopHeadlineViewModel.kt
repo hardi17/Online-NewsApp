@@ -5,11 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.data.repository.TopHeadlineRepository
 import com.hardi.newsapp.ui.base.UiState
-import com.hardi.newsapp.utils.AppConstant.COUNTRY
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class TopHeadlineViewModel(private val topHeadlineRepository: TopHeadlineRepository): ViewModel(){

@@ -19,7 +19,7 @@ import com.hardi.newsapp.ui.countryactivity.CountriesAdapter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class LanguagesActivity : AppCompatActivity() {
+class LanguagesActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityCountryOrLanguageBinding
 
@@ -28,8 +28,6 @@ class LanguagesActivity : AppCompatActivity() {
 
     @Inject
     lateinit var languagesViewModel: LanguagesViewModel
-
-    private lateinit var resultList: List<CountryOrLanguage>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
@@ -52,30 +50,37 @@ class LanguagesActivity : AppCompatActivity() {
     }
 
     private fun createListAndSet() {
-
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 languagesViewModel.uiState.collect {
                     when (it) {
                         is UiState.Success -> {
                             binding.progressBar.visibility = View.GONE
-                            binding.tvError.visibility = View.GONE
+                            binding.rlErrorLayout.visibility = View.GONE
                             renderList(it.data)
                             binding.recyclerView.visibility = View.VISIBLE
                         }
                         is UiState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.recyclerView.visibility = View.GONE
-                            binding.tvError.visibility = View.GONE
+                            binding.rlErrorLayout.visibility = View.GONE
                         }
                         is UiState.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.recyclerView.visibility = View.GONE
-                            binding.tvError.visibility = View.VISIBLE
-                            binding.tvError.text = getString(R.string.internet_error)
+                            binding.rlErrorLayout.visibility = View.VISIBLE
+                            binding.btnTryAgain.setOnClickListener(this@LanguagesActivity)
                         }
                     }
                 }
+            }
+        }
+    }
+
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.btn_tryAgain ->{
+                createListAndSet()
             }
         }
     }

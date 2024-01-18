@@ -16,10 +16,13 @@ import com.hardi.newsapp.databinding.ActivitySearchBinding
 import com.hardi.newsapp.di.component.DaggerActivityComponent
 import com.hardi.newsapp.di.module.ActivityModule
 import com.hardi.newsapp.ui.base.UiState
+import com.hardi.newsapp.utils.AppConstant
+import com.hardi.newsapp.utils.AppConstant.DEFAULT_SOURCE
+import com.hardi.newsapp.utils.KeyboardUtils
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivitySearchBinding
 
@@ -36,7 +39,6 @@ class SearchActivity : AppCompatActivity() {
         setContentView(binding.root)
         setUpUI()
         getSearchResult()
-        setupObserver()
     }
 
     private fun injectDependencies() {
@@ -65,7 +67,18 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newQuery: String?): Boolean {
-                newQuery?.let { viewModel.fetchEverything(newQuery) }
+                newQuery?.let {
+                    if (it.isNotEmpty()) {
+                        setupObserver()
+                        viewModel.fetchEverything(it)
+                    } else {
+                        KeyboardUtils.closeSoftKeyboard(this@SearchActivity)
+                        binding.progressBar.visibility = View.GONE
+                        binding.recyclerView.visibility = View.GONE
+                        binding.rlErrorLayout.visibility = View.GONE
+                        binding.noSearchText.visibility= View.VISIBLE
+                    }
+                }
                 return true
             }
 
@@ -82,11 +95,13 @@ class SearchActivity : AppCompatActivity() {
                             if (it.data.isEmpty()) {
                                 binding.progressBar.visibility = View.GONE
                                 binding.recyclerView.visibility = View.GONE
-                                binding.tvError.visibility = View.VISIBLE
+                                binding.noSearchText.visibility = View.GONE
+                                binding.rlErrorLayout.visibility = View.VISIBLE
                                 binding.tvError.text = getString(R.string.no_data_found)
                             } else {
                                 binding.progressBar.visibility = View.GONE
-                                binding.tvError.visibility = View.GONE
+                                binding.rlErrorLayout.visibility = View.GONE
+                                binding.noSearchText.visibility = View.GONE
                                 renderList(it.data)
                                 binding.recyclerView.visibility = View.VISIBLE
                             }
@@ -94,19 +109,28 @@ class SearchActivity : AppCompatActivity() {
                         is UiState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.recyclerView.visibility = View.GONE
-                            binding.tvError.visibility = View.GONE
+                            binding.noSearchText.visibility = View.GONE
+                            binding.rlErrorLayout.visibility = View.GONE
                         }
                         is UiState.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.recyclerView.visibility = View.GONE
-                            binding.tvError.visibility = View.VISIBLE
-                            binding.tvError.text = it.message
+                            binding.noSearchText.visibility = View.GONE
+                            binding.rlErrorLayout.visibility = View.VISIBLE
+                            binding.btnTryAgain.setOnClickListener(this@SearchActivity)
                         }
                     }
                 }
             }
         }
+    }
 
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.btn_tryAgain -> {
+                setupObserver()
+            }
+        }
     }
 
     private fun renderList(articleList: List<Article>) {

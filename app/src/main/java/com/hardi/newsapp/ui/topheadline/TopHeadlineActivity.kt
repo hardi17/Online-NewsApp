@@ -20,7 +20,7 @@ import com.hardi.newsapp.ui.base.UiState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class TopHeadlineActivity : AppCompatActivity() {
+class TopHeadlineActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityTopHeadlineBinding
 
@@ -87,29 +87,36 @@ class TopHeadlineActivity : AppCompatActivity() {
                     when(it){
                             is UiState.Success -> {
                                 binding.progressBar.visibility = View.GONE
-                                binding.tvError.visibility = View.GONE
+                                binding.rlErrorLayout.visibility = View.GONE
                                 renderList(it.data)
                                 binding.recyclerView.visibility = View.VISIBLE
                             }is UiState.Loading -> {
                                 binding.progressBar.visibility = View.VISIBLE
                                 binding.recyclerView.visibility = View.GONE
-                                binding.tvError.visibility = View.GONE
+                                binding.rlErrorLayout.visibility = View.GONE
                             }is UiState.Error -> {
                                 binding.progressBar.visibility = View.GONE
                                 binding.recyclerView.visibility = View.GONE
-                                binding.tvError.visibility = View.VISIBLE
-                                binding.tvError.text = getString(R.string.internet_error)
+                                binding.rlErrorLayout.visibility = View.VISIBLE
+                                binding.btnTryAgain.setOnClickListener(this@TopHeadlineActivity)
                             }
                     }
                 }
             }
         }
-
     }
 
     private fun renderList(articleList: List<Article>) {
         topHeadlineAdapter.addData(articleList)
         topHeadlineAdapter.notifyDataSetChanged()
+    }
+
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.btn_tryAgain ->{
+                setupObserver()
+            }
+        }
     }
 
 
