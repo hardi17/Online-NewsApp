@@ -10,16 +10,16 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LanguagesRepository @Inject constructor(@ApplicationContext private val context: Context){
+class LanguagesRepository @Inject constructor(@ApplicationContext private val context: Context) {
 
     fun getLanguages(): Flow<List<LocaleInfo>> {
-        val names = context.resources.getStringArray(R.array.language_names)
-        val codes = context.resources.getStringArray(R.array.language_codes)
-
-        val resultList = names.mapIndexed { index, names ->
-            LocaleInfo(names, codes[index])
-        }
         return flow {
+            val names = context.resources.getStringArray(R.array.language_names)
+            val codes = context.resources.getStringArray(R.array.language_codes)
+
+            val resultList = names.mapIndexed { index, names ->
+                LocaleInfo(names, codes[index])
+            }
             emit(resultList)
         }
     }

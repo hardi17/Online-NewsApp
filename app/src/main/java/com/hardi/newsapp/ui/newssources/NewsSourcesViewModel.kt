@@ -6,9 +6,11 @@ import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.data.model.NewsSource
 import com.hardi.newsapp.data.repository.NewsSourcesRepository
 import com.hardi.newsapp.ui.base.UiState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class NewsSourcesViewModel(private val newsSourcesRepository: NewsSourcesRepository) : ViewModel() {
@@ -21,12 +23,13 @@ class NewsSourcesViewModel(private val newsSourcesRepository: NewsSourcesReposit
         fetchNewsSources()
     }
 
-    private fun fetchNewsSources(){
+    private fun fetchNewsSources() {
         viewModelScope.launch {
-                    newsSourcesRepository.getNewsSources()
+            newsSourcesRepository.getNewsSources()
+                .flowOn(Dispatchers.IO)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
-                }.collect(){
+                }.collect() {
                     _uiState.value = UiState.Success(it)
                 }
         }

@@ -5,9 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.hardi.newsapp.data.model.LocaleInfo
 import com.hardi.newsapp.data.repository.LanguagesRepository
 import com.hardi.newsapp.ui.base.UiState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class LanguagesViewModel(private val languagesRepository: LanguagesRepository): ViewModel() {
@@ -23,6 +25,7 @@ class LanguagesViewModel(private val languagesRepository: LanguagesRepository): 
     private fun fetchLanguages(){
         viewModelScope.launch {
             languagesRepository.getLanguages()
+                .flowOn(Dispatchers.IO)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
                 }.collect(){

@@ -13,12 +13,12 @@ import javax.inject.Singleton
 class CountriesRepository @Inject constructor(@ApplicationContext private val context: Context){
 
     fun getCountries(): Flow<List<LocaleInfo>>{
-        val names = context.resources.getStringArray(R.array.country_name)
-        val codes = context.resources.getStringArray(R.array.country_code)
-        val resultList = names.mapIndexed { index, names ->
-            LocaleInfo(names, codes[index])
-        }
         return flow {
+            val names = context.resources.getStringArray(R.array.country_name)
+            val codes = context.resources.getStringArray(R.array.country_code)
+            val resultList = names.mapIndexed { index, names ->
+                LocaleInfo(names, codes[index])
+            }
            emit(resultList)
         }
     }

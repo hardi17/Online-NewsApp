@@ -38,7 +38,7 @@ class LanguagesActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setRecyclerView() {
-        binding.toolbar.txtTitle.text = resources.getString(R.string.country_selection)
+        binding.toolbar.txtTitle.text = resources.getString(R.string.language_Selection)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.addItemDecoration(
             DividerItemDecoration(

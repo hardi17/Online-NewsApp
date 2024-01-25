@@ -5,9 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.data.repository.TopHeadlineRepository
 import com.hardi.newsapp.ui.base.UiState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class NewsListViewModel(private val topHeadlineRepository: TopHeadlineRepository): ViewModel(){
@@ -19,6 +21,7 @@ class NewsListViewModel(private val topHeadlineRepository: TopHeadlineRepository
     fun fetchSource(sources : String){
         viewModelScope.launch {
             topHeadlineRepository.getNewsBySources(sources)
+                .flowOn(Dispatchers.IO)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
                 }.collect(){
