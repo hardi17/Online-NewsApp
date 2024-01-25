@@ -2,7 +2,7 @@ package com.hardi.newsapp.ui.languageactivity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hardi.newsapp.data.model.CountryOrLanguage
+import com.hardi.newsapp.data.model.LocaleInfo
 import com.hardi.newsapp.data.repository.LanguagesRepository
 import com.hardi.newsapp.ui.base.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,9 +12,9 @@ import kotlinx.coroutines.launch
 
 class LanguagesViewModel(private val languagesRepository: LanguagesRepository): ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState<List<CountryOrLanguage>>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState<List<LocaleInfo>>>(UiState.Loading)
 
-    val uiState: StateFlow<UiState<List<CountryOrLanguage>>> = _uiState
+    val uiState: StateFlow<UiState<List<LocaleInfo>>> = _uiState
 
     init {
         fetchLanguages()

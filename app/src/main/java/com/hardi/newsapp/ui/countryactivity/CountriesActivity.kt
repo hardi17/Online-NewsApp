@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hardi.NewsApplication
 import com.hardi.newsapp.R
-import com.hardi.newsapp.data.model.CountryOrLanguage
+import com.hardi.newsapp.data.model.LocaleInfo
 import com.hardi.newsapp.databinding.ActivityCountryOrLanguageBinding
 import com.hardi.newsapp.di.component.DaggerActivityComponent
 import com.hardi.newsapp.di.module.ActivityModule
@@ -85,7 +85,7 @@ class CountriesActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun renderList(resultList: List<CountryOrLanguage>) {
+    private fun renderList(resultList: List<LocaleInfo>) {
         countryAdapter = CountriesAdapter(resultList)
         binding.recyclerView.adapter = countryAdapter
     }

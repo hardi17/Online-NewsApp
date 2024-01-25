@@ -1,6 +1,6 @@
 package com.hardi.newsapp.data.model
 
-data class CountryOrLanguage(
+data class LocaleInfo(
     val name: String = "",
     val code: String = "",
 )

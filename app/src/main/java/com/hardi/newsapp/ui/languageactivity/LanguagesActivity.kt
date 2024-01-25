@@ -10,12 +10,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hardi.NewsApplication
 import com.hardi.newsapp.R
-import com.hardi.newsapp.data.model.CountryOrLanguage
+import com.hardi.newsapp.data.model.LocaleInfo
 import com.hardi.newsapp.databinding.ActivityCountryOrLanguageBinding
 import com.hardi.newsapp.di.component.DaggerActivityComponent
 import com.hardi.newsapp.di.module.ActivityModule
 import com.hardi.newsapp.ui.base.UiState
-import com.hardi.newsapp.ui.countryactivity.CountriesAdapter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -85,7 +84,7 @@ class LanguagesActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun renderList(resultList: List<CountryOrLanguage>) {
+    private fun renderList(resultList: List<LocaleInfo>) {
         languageAdapter = LanguagesAdapter(resultList)
         binding.recyclerView.adapter = languageAdapter
     }

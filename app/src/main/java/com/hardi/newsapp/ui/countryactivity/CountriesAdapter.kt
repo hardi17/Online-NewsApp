@@ -3,17 +3,17 @@ package com.hardi.newsapp.ui.countryactivity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.hardi.newsapp.data.model.CountryOrLanguage
+import com.hardi.newsapp.data.model.LocaleInfo
 import com.hardi.newsapp.databinding.CountryOrLanguageLayoutBinding
 import com.hardi.newsapp.ui.newslist.NewsListActivity
 
 class CountriesAdapter(
-    private val countryOrLangList: List<CountryOrLanguage>
+    private val countryOrLangList: List<LocaleInfo>
 ) : RecyclerView.Adapter<CountriesAdapter.DataViewHolder>() {
 
     class DataViewHolder(private val binding: CountryOrLanguageLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(countryOrLangList: CountryOrLanguage) {
+        fun bind(countryOrLangList: LocaleInfo) {
             binding.tvCountryOrLanguageName.text = countryOrLangList.name
             itemView.setOnClickListener {
                     it.context.startActivity(
