@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class SearchNewsRepository @Inject constructor(private val networkService: NetworkService) {
 
-    fun getEverything(q: String): Flow<List<Article>> {
+    fun getSearchNews(q: String): Flow<List<Article>> {
         return flow {
             emit(networkService.getEverything(q))
         }.map{
