@@ -2,7 +2,6 @@ package com.hardi.newsapp.utils
 
 object AppConstant {
 
-    const val API_KEY = "c02ab86e9761496faebbf29d2c96fb06"
     const val DEBOUNCE_TIMEOUT = 200L
     const val MIN_SEARCH_CHAR = 2
     const val DEFAULT_COUNTRY = "in"
