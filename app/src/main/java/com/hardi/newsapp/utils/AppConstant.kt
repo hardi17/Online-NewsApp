@@ -1,5 +1,7 @@
 package com.hardi.newsapp.utils
 
+import com.hardi.newsapp.data.model.LocaleInfo
+
 object AppConstant {
 
     const val DEBOUNCE_TIMEOUT = 200L

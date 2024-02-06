@@ -3,7 +3,7 @@ package com.hardi.newsapp.data.repository
 import android.content.Context
 import com.hardi.newsapp.R
 import com.hardi.newsapp.data.model.LocaleInfo
-import com.hardi.newsapp.di.ApplicationContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

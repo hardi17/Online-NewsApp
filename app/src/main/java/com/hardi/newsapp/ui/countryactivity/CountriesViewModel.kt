@@ -5,14 +5,17 @@ import androidx.lifecycle.viewModelScope
 import com.hardi.newsapp.data.model.LocaleInfo
 import com.hardi.newsapp.data.repository.CountriesRepository
 import com.hardi.newsapp.ui.base.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CountriesViewModel (private val countriesRepository: CountriesRepository) : ViewModel(){
+@HiltViewModel
+class CountriesViewModel @Inject constructor(private val countriesRepository: CountriesRepository) : ViewModel(){
 
     private val _uiState = MutableStateFlow<UiState<List<LocaleInfo>>>(UiState.Loading)
 

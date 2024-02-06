@@ -2,24 +2,24 @@ package com.hardi.newsapp.ui.newslist
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hardi.NewsApplication
 import com.hardi.newsapp.R
 import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.databinding.ActivityNewsListBinding
-import com.hardi.newsapp.di.component.DaggerActivityComponent
-import com.hardi.newsapp.di.module.ActivityModule
 import com.hardi.newsapp.ui.base.UiState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewsListActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityNewsListBinding
@@ -27,8 +27,7 @@ class NewsListActivity : AppCompatActivity(), View.OnClickListener {
     @Inject
     lateinit var newsListAdapter: NewsListAdapter
 
-    @Inject
-    lateinit var newsListViewModel: NewsListViewModel
+    private lateinit var newsListViewModel: NewsListViewModel
 
     companion object {
 
@@ -52,13 +51,17 @@ class NewsListActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
         binding = ActivityNewsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupViewModel()
         getIntentDataAnbdFetchData()
         setUpUI()
         setupObserver()
+    }
+
+    private fun setupViewModel() {
+        newsListViewModel = ViewModelProvider(this)[NewsListViewModel::class.java]
     }
 
     /*Getting intent data which we are pssing throught any other activity*/
@@ -109,11 +112,13 @@ class NewsListActivity : AppCompatActivity(), View.OnClickListener {
                                 binding.recyclerView.visibility = View.VISIBLE
                             }
                         }
+
                         is UiState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.recyclerView.visibility = View.GONE
                             binding.rlErrorLayout.visibility = View.GONE
                         }
+
                         is UiState.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.recyclerView.visibility = View.GONE
@@ -127,8 +132,8 @@ class NewsListActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when(v.id){
-            R.id.btn_tryAgain ->{
+        when (v.id) {
+            R.id.btn_tryAgain -> {
                 setupObserver()
             }
         }
@@ -139,9 +144,4 @@ class NewsListActivity : AppCompatActivity(), View.OnClickListener {
         newsListAdapter.notifyDataSetChanged()
     }
 
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this)).build().inject(this)
-    }
 }

@@ -5,48 +5,52 @@ import androidx.lifecycle.viewModelScope
 import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.data.repository.TopHeadlineRepository
 import com.hardi.newsapp.ui.base.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewsListViewModel(private val topHeadlineRepository: TopHeadlineRepository): ViewModel(){
+@HiltViewModel
+class NewsListViewModel @Inject constructor(private val topHeadlineRepository: TopHeadlineRepository) :
+    ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<List<Article>>>(UiState.Loading)
 
     val uiState: StateFlow<UiState<List<Article>>> = _uiState
 
-    fun fetchSource(sources : String){
+    fun fetchSource(sources: String) {
         viewModelScope.launch {
             topHeadlineRepository.getNewsBySources(sources)
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
-                }.collect(){
+                }.collect() {
                     _uiState.value = UiState.Success(it)
                 }
         }
     }
 
-    fun fetchNewsByCountry(sources : String){
+    fun fetchNewsByCountry(sources: String) {
         viewModelScope.launch {
             topHeadlineRepository.getNewsByCountry(sources)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
-                }.collect(){
+                }.collect() {
                     _uiState.value = UiState.Success(it)
                 }
         }
     }
 
-    fun fetchNewsByLanguage(language : String){
+    fun fetchNewsByLanguage(language: String) {
         viewModelScope.launch {
             topHeadlineRepository.getNewsByLanguage(language)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
-                }.collect(){
+                }.collect() {
                     _uiState.value = UiState.Success(it)
                 }
         }

@@ -19,12 +19,7 @@ class TopHeadlineAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article) {
             binding.textViewTitle.text = article.title
-            if(article.description != null) {
-                binding.textViewDescription.visibility = View.VISIBLE
-                binding.textViewDescription.text = article.description
-            } else{
-                binding.textViewDescription.visibility = View.GONE
-            }
+            binding.textViewDescription.text = article.description
             binding.textViewSource.text = article.source.name
             Glide.with(binding.imageViewBanner.context)
                 .load(article.imageUrl)

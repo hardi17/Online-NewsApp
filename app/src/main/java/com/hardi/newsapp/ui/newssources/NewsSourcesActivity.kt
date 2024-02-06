@@ -1,23 +1,23 @@
 package com.hardi.newsapp.ui.newssources
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hardi.NewsApplication
 import com.hardi.newsapp.R
 import com.hardi.newsapp.data.model.NewsSource
 import com.hardi.newsapp.databinding.ActivityNewsSourcesBinding
-import com.hardi.newsapp.di.component.DaggerActivityComponent
-import com.hardi.newsapp.di.module.ActivityModule
 import com.hardi.newsapp.ui.base.UiState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewsSourcesActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityNewsSourcesBinding
@@ -25,16 +25,19 @@ class NewsSourcesActivity : AppCompatActivity(), View.OnClickListener {
     @Inject
     lateinit var newsSourcesAdapter: NewsSourcesAdapter
 
-    @Inject
-    lateinit var newsSourcesViewModel: NewsSourcesViewModel
+    private lateinit var newsSourcesViewModel: NewsSourcesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
         binding = ActivityNewsSourcesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setUpViewModel()
         setUpUI()
         setupObserver()
+    }
+
+    private fun setUpViewModel() {
+        newsSourcesViewModel = ViewModelProvider(this)[NewsSourcesViewModel::class.java]
     }
 
 
@@ -63,11 +66,13 @@ class NewsSourcesActivity : AppCompatActivity(), View.OnClickListener {
                             renderList(it.data)
                             binding.recyclerView.visibility = View.VISIBLE
                         }
+
                         is UiState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.recyclerView.visibility = View.GONE
                             binding.rlErrorLayout.visibility = View.GONE
                         }
+
                         is UiState.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.recyclerView.visibility = View.GONE
@@ -81,22 +86,16 @@ class NewsSourcesActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when(v.id){
-            R.id.btn_tryAgain ->{
+        when (v.id) {
+            R.id.btn_tryAgain -> {
                 setupObserver()
             }
         }
     }
-
 
     private fun renderList(list: List<NewsSource>) {
         newsSourcesAdapter.addData(list)
         newsSourcesAdapter.notifyDataSetChanged()
     }
 
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this)).build().inject(this)
-    }
 }

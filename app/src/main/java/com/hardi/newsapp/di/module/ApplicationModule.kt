@@ -1,31 +1,25 @@
 package com.hardi.newsapp.di.module
 
-import android.content.Context
-import com.hardi.NewsApplication
 import com.hardi.newsapp.data.api.ApiKeyInterceptor
 import com.hardi.newsapp.data.api.NetworkService
-import com.hardi.newsapp.di.ApplicationContext
 import com.hardi.newsapp.di.BaseUrl
 import com.hardi.newsapp.di.NetworkApiKey
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(private val application: NewsApplication) {
-
-    @ApplicationContext
-    @Provides
-    fun provideContext(): Context{
-        return application
-    }
+@InstallIn(SingletonComponent::class)
+class ApplicationModule {
 
     @BaseUrl
     @Provides
-    fun provideBaseUrl() : String = "https://newsapi.org/v2/"
+    fun provideBaseUrl(): String = "https://newsapi.org/v2/"
 
     @NetworkApiKey
     @Provides
@@ -33,7 +27,7 @@ class ApplicationModule(private val application: NewsApplication) {
 
     @Provides
     @Singleton
-    fun provideGsonConverterFactory() : GsonConverterFactory = GsonConverterFactory.create()
+    fun provideGsonConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
 
     @Provides
     @Singleton
@@ -51,7 +45,7 @@ class ApplicationModule(private val application: NewsApplication) {
         @BaseUrl baseUrl: String,
         okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
-    ) : NetworkService {
+    ): NetworkService {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)

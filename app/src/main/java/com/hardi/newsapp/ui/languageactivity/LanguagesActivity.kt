@@ -1,23 +1,23 @@
 package com.hardi.newsapp.ui.languageactivity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hardi.NewsApplication
 import com.hardi.newsapp.R
 import com.hardi.newsapp.data.model.LocaleInfo
 import com.hardi.newsapp.databinding.ActivityCountryOrLanguageBinding
-import com.hardi.newsapp.di.component.DaggerActivityComponent
-import com.hardi.newsapp.di.module.ActivityModule
 import com.hardi.newsapp.ui.base.UiState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LanguagesActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityCountryOrLanguageBinding
@@ -25,16 +25,19 @@ class LanguagesActivity : AppCompatActivity(), View.OnClickListener {
     @Inject
     lateinit var languageAdapter: LanguagesAdapter
 
-    @Inject
-    lateinit var languagesViewModel: LanguagesViewModel
+    private lateinit var languagesViewModel: LanguagesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
         binding = ActivityCountryOrLanguageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupViewModel()
         setRecyclerView()
         createListAndSet()
+    }
+
+    private fun setupViewModel() {
+        languagesViewModel = ViewModelProvider(this)[LanguagesViewModel::class.java]
     }
 
     private fun setRecyclerView() {
@@ -59,11 +62,13 @@ class LanguagesActivity : AppCompatActivity(), View.OnClickListener {
                             renderList(it.data)
                             binding.recyclerView.visibility = View.VISIBLE
                         }
+
                         is UiState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.recyclerView.visibility = View.GONE
                             binding.rlErrorLayout.visibility = View.GONE
                         }
+
                         is UiState.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.recyclerView.visibility = View.GONE
@@ -77,8 +82,8 @@ class LanguagesActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when(v.id){
-            R.id.btn_tryAgain ->{
+        when (v.id) {
+            R.id.btn_tryAgain -> {
                 createListAndSet()
             }
         }
@@ -87,12 +92,5 @@ class LanguagesActivity : AppCompatActivity(), View.OnClickListener {
     private fun renderList(resultList: List<LocaleInfo>) {
         languageAdapter = LanguagesAdapter(resultList)
         binding.recyclerView.adapter = languageAdapter
-    }
-
-
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this)).build().inject(this)
     }
 }

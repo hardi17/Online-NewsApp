@@ -1,27 +1,27 @@
 package com.hardi.newsapp.ui.searchactivity
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hardi.NewsApplication
 import com.hardi.newsapp.R
 import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.databinding.ActivitySearchBinding
-import com.hardi.newsapp.di.component.DaggerActivityComponent
-import com.hardi.newsapp.di.module.ActivityModule
 import com.hardi.newsapp.ui.base.UiState
 import com.hardi.newsapp.utils.KeyboardUtils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding
@@ -29,26 +29,24 @@ class SearchActivity : AppCompatActivity() {
     @Inject
     lateinit var adapter: SearchViewAdapter
 
-    @Inject
-    lateinit var viewModel: SearchViewModel
+    private lateinit var viewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setUpViewModel()
         setUpUI()
         getSearchResult()
         setupObserver()
     }
 
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this)).build().inject(this)
+    private fun setUpViewModel() {
+        viewModel = ViewModelProvider(this)[SearchViewModel::class.java]
     }
 
     /*Setting up recyclerview layout and adding adapter*/
+    @SuppressLint("ClickableViewAccessibility")
     private fun setUpUI() {
         binding.toolbar.txtTitle.text = getString(R.string.search)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -103,12 +101,14 @@ class SearchActivity : AppCompatActivity() {
                                 binding.recyclerView.visibility = View.VISIBLE
                             }
                         }
+
                         is UiState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.recyclerView.visibility = View.GONE
                             binding.noSearchText.visibility = View.GONE
                             binding.rlErrorLayout.visibility = View.GONE
                         }
+
                         is UiState.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.recyclerView.visibility = View.GONE
