@@ -4,6 +4,8 @@ import com.hardi.newsapp.data.api.ApiKeyInterceptor
 import com.hardi.newsapp.data.api.NetworkService
 import com.hardi.newsapp.di.BaseUrl
 import com.hardi.newsapp.di.NetworkApiKey
+import com.hardi.newsapp.utils.AppConstant.API_KEY
+import com.hardi.newsapp.utils.AppConstant.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,11 +21,11 @@ class ApplicationModule {
 
     @BaseUrl
     @Provides
-    fun provideBaseUrl(): String = "https://newsapi.org/v2/"
+    fun provideBaseUrl(): String = BASE_URL
 
     @NetworkApiKey
     @Provides
-    fun provideApiKey(): String = "c02ab86e9761496faebbf29d2c96fb06"
+    fun provideApiKey(): String = API_KEY
 
     @Provides
     @Singleton

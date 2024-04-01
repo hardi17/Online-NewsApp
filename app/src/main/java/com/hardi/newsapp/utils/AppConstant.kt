@@ -6,6 +6,9 @@ object AppConstant {
     const val DEBOUNCE_TIMEOUT = 300L
     const val MIN_SEARCH_CHAR = 3
     const val DEFAULT_COUNTRY = "us"
-    const val DEFAULT_LANGUAGE = "en"
-    const val DEFAULT_SOURCE = "abc-news"
+    const val COUNTRY_ID = "countryId"
+    const val LANG_ID = "langId"
+    const val SOURCE_ID = "sourceId"
+    const val BASE_URL = "https://newsapi.org/v2/"
+    const val API_KEY = "c02ab86e9761496faebbf29d2c96fb06"
 }

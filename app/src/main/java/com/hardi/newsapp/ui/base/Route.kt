@@ -3,7 +3,6 @@ package com.hardi.newsapp.ui.base
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Language
-import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Search

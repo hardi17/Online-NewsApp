@@ -42,7 +42,7 @@ class NewsListViewModel @Inject constructor(
     }
 
 
-    fun fetchNewsBySource(sources: String) {
+    private fun fetchNewsBySource(sources: String) {
         viewModelScope.launch {
             topHeadlineRepository.getNewsBySources(sources)
                 .flowOn(Dispatchers.IO)
@@ -54,7 +54,7 @@ class NewsListViewModel @Inject constructor(
         }
     }
 
-    fun fetchNewsByCountry(country: String) {
+    private fun fetchNewsByCountry(country: String) {
         viewModelScope.launch {
             topHeadlineRepository.getNewsByCountry(country)
                 .catch { e ->
@@ -65,7 +65,7 @@ class NewsListViewModel @Inject constructor(
         }
     }
 
-    fun fetchNewsByLanguage(language: String) {
+    private fun fetchNewsByLanguage(language: String) {
         viewModelScope.launch {
             topHeadlineRepository.getNewsByLanguage(language)
                 .catch { e ->

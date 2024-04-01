@@ -1,19 +1,14 @@
-package com.hardi.newsapp.ui.countryactivity
+package com.hardi.newsapp.ui.country
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -23,8 +18,9 @@ import com.hardi.newsapp.ui.base.UiState
 import com.hardi.newsapp.ui.reusable.CountryUI
 import com.hardi.newsapp.ui.reusable.ShowError
 import com.hardi.newsapp.ui.reusable.ShowLoading
+import com.hardi.newsapp.ui.reusable.TopAppBarWithIconUI
+import com.hardi.newsapp.ui.reusable.TopAppBarWithOutIconUI
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CountryListRoute(
     onCountryClick: (countryId: String) -> Unit,
@@ -34,16 +30,7 @@ fun CountryListRoute(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = Color.White
-                ),
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.countries)
-                    )
-                })
+            TopAppBarWithOutIconUI(title = stringResource(id = R.string.countries))
         }, content = { paddingValues ->
             Column(
                 modifier = Modifier.padding(paddingValues)
