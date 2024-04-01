@@ -1,9 +1,9 @@
-package com.hardi.newsapp.ui.languageactivity
+package com.hardi.newsapp.ui.country
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hardi.newsapp.data.model.LocaleInfo
-import com.hardi.newsapp.data.repository.LanguagesRepository
+import com.hardi.newsapp.data.repository.CountriesRepository
 import com.hardi.newsapp.ui.base.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LanguagesViewModel @Inject constructor(private val languagesRepository: LanguagesRepository) :
+class CountriesViewModel @Inject constructor(private val countriesRepository: CountriesRepository) :
     ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<List<LocaleInfo>>>(UiState.Loading)
@@ -23,12 +23,12 @@ class LanguagesViewModel @Inject constructor(private val languagesRepository: La
     val uiState: StateFlow<UiState<List<LocaleInfo>>> = _uiState
 
     init {
-        fetchLanguages()
+        fetchCountries()
     }
 
-    private fun fetchLanguages() {
+    private fun fetchCountries() {
         viewModelScope.launch {
-            languagesRepository.getLanguages()
+            countriesRepository.getCountries()
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
