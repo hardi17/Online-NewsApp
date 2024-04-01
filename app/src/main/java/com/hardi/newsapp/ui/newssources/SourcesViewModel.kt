@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NewsSourcesViewModel @Inject constructor(private val newsSourcesRepository: NewsSourcesRepository) :
+class SourcesViewModel @Inject constructor(private val newsSourcesRepository: NewsSourcesRepository) :
     ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<List<NewsSource>>>(UiState.Loading)

@@ -28,14 +28,15 @@ class SearchViewModel @Inject constructor(private val searchNewsRepository: Sear
 
     val uiState: StateFlow<UiState<List<Article>>> = _uiState
 
-    private val query = MutableStateFlow("")
+    private val _query = MutableStateFlow("")
+    val query: StateFlow<String> = _query
 
     init {
         fetchNewsQuery()
     }
 
-    fun searchNews(searchResult: String) {
-        query.value = searchResult
+    fun searchNews(searchResult: String = _query.value) {
+        _query.value = searchResult
     }
 
     fun fetchNewsQuery() {

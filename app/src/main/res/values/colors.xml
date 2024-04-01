@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_tint">#e4ecbf</color>
     <color name="red">#FF0000</color>
+    <color name="skyBlue">#66ccff</color>
 </resources>

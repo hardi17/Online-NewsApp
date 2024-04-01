@@ -15,7 +15,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LanguagesViewModel @Inject constructor(private val languagesRepository: LanguagesRepository): ViewModel() {
+class LanguagesViewModel @Inject constructor(private val languagesRepository: LanguagesRepository) :
+    ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<List<LocaleInfo>>>(UiState.Loading)
 
@@ -25,13 +26,13 @@ class LanguagesViewModel @Inject constructor(private val languagesRepository: La
         fetchLanguages()
     }
 
-    private fun fetchLanguages(){
+    private fun fetchLanguages() {
         viewModelScope.launch {
             languagesRepository.getLanguages()
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
-                }.collect(){
+                }.collect() {
                     _uiState.value = UiState.Success(it)
                 }
         }
