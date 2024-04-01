@@ -1,4 +1,4 @@
-package com.hardi.newsapp.ui.searchactivity
+package com.hardi.newsapp.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -39,7 +39,7 @@ class SearchViewModel @Inject constructor(private val searchNewsRepository: Sear
         _query.value = searchResult
     }
 
-    fun fetchNewsQuery() {
+    private fun fetchNewsQuery() {
         viewModelScope.launch {
             query.debounce(DEBOUNCE_TIMEOUT)
                 .filter {

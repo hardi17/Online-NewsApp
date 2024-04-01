@@ -1,25 +1,20 @@
-package com.hardi.newsapp.ui.searchactivity
+package com.hardi.newsapp.ui.search
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,11 +27,11 @@ import com.hardi.newsapp.ui.reusable.ArticleUI
 import com.hardi.newsapp.ui.reusable.ShowDefaultMessage
 import com.hardi.newsapp.ui.reusable.ShowError
 import com.hardi.newsapp.ui.reusable.ShowLoading
+import com.hardi.newsapp.ui.reusable.TopAppBarWithOutIconUI
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchNewsRoute(
-    onBakPress: () -> Unit,
+    onBackPress: () -> Unit,
     onSearchNewsClick: (url: String) -> Unit,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
@@ -44,26 +39,7 @@ fun SearchNewsRoute(
     val queryState: String by viewModel.query.collectAsStateWithLifecycle()
 
     Scaffold(topBar = {
-        TopAppBar(
-            colors = TopAppBarDefaults.smallTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                titleContentColor = Color.White,
-                navigationIconContentColor = Color.White
-            ),
-            title = {
-                Text(
-                    text = stringResource(id = R.string.search)
-                )
-            },
-            navigationIcon = {
-                IconButton(
-                    onClick = { onBakPress() }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "null"
-                    )
-                }
-            })
+        TopAppBarWithOutIconUI(title = stringResource(id = R.string.search))
     }, content = { paddingValues ->
         Column(
             modifier = Modifier.padding(paddingValues)
@@ -72,7 +48,8 @@ fun SearchNewsRoute(
                 searchUIState = uiState,
                 searchQuery = queryState,
                 onSearchNewsClick = onSearchNewsClick,
-                viewModel = viewModel
+                viewModel = viewModel,
+                onBackclick = onBackPress
             )
         }
     }
@@ -87,7 +64,8 @@ fun SearchNewsScreen(
     searchUIState: UiState<List<Article>>,
     searchQuery: String,
     onSearchNewsClick: (url: String) -> Unit,
-    viewModel: SearchViewModel
+    viewModel: SearchViewModel,
+    onBackclick: () -> Unit
 ) {
     SearchBar(
         query = searchQuery,
@@ -111,6 +89,10 @@ fun SearchNewsScreen(
         } else {
             SearchNews(searchUIState, onSearchNewsClick)
         }
+    }
+
+    BackHandler {
+        onBackclick()
     }
 }
 

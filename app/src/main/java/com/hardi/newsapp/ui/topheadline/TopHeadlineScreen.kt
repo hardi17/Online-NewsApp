@@ -23,8 +23,8 @@ import com.hardi.newsapp.ui.base.UiState
 import com.hardi.newsapp.ui.reusable.ArticleUI
 import com.hardi.newsapp.ui.reusable.ShowError
 import com.hardi.newsapp.ui.reusable.ShowLoading
+import com.hardi.newsapp.ui.reusable.TopAppBarWithOutIconUI
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopHeadlineroute(
     onNewsClick: (url: String) -> Unit,
@@ -34,14 +34,7 @@ fun TopHeadlineroute(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = Color.White
-                ),
-                title = {
-                    Text(text = stringResource(id = R.string.top_headlines))
-                })
+            TopAppBarWithOutIconUI(title = stringResource(id = R.string.top_headlines))
         }, content = { paddingValues ->
             Column(
                 modifier = Modifier.padding(paddingValues)

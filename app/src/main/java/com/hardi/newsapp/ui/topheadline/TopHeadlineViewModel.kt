@@ -27,7 +27,7 @@ class TopHeadlineViewModel @Inject constructor(private val topHeadlineRepository
         fetchNews()
     }
 
-    fun fetchNews() {
+    private fun fetchNews() {
         viewModelScope.launch {
             topHeadlineRepository.getTopHeadlines(AppConstant.DEFAULT_COUNTRY)
                 .flowOn(Dispatchers.IO)

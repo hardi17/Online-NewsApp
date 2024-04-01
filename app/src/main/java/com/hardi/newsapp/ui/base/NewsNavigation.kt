@@ -28,11 +28,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.hardi.newsapp.ui.countryactivity.CountryListRoute
-import com.hardi.newsapp.ui.languageactivity.LanguageListRoute
+import com.hardi.newsapp.ui.country.CountryListRoute
+import com.hardi.newsapp.ui.language.LanguageListRoute
 import com.hardi.newsapp.ui.newslist.NewsListRoute
 import com.hardi.newsapp.ui.newssources.NewsSourceRoute
-import com.hardi.newsapp.ui.searchactivity.SearchNewsRoute
+import com.hardi.newsapp.ui.search.SearchNewsRoute
 import com.hardi.newsapp.ui.topheadline.TopHeadlineroute
 
 @Preview
@@ -102,7 +102,7 @@ fun AppNavigationBar() {
             }
             composable(route = Route.SearchNews.name) {
                 SearchNewsRoute(
-                    onBakPress = {
+                    onBackPress = {
                         navHostController.popBackStack()
                     },
                     onSearchNewsClick = {
