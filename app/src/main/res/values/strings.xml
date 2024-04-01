@@ -1,23 +1,18 @@
 <resources>
     <string name="app_name">NewsApp-MVVM-Architecture</string>
 
+    <!--screens name and other text-->
     <string name="home">Home</string>
     <string name="top_headlines">Top Headlines</string>
     <string name="new_sources">News Sources</string>
+    <string name="sources">Sources</string>
     <string name="countries">Countries</string>
     <string name="languages">Languages</string>
     <string name="search">Search</string>
     <string name="search_here">Search news here</string>
+    <string name="news_list_by_selection">News by selection</string>
 
-    <string name="news_list_by_source">News by source</string>
-    <string name="news_list_by_country">News by country</string>
-    <string name="news_list_by_language">News by language</string>
-
-    <string name="country_selection">Country Selection</string>
-    <string name="language_Selection">Language Selection</string>
-
-    <string name="error_msg_image">Not Image URL found</string>
-
+    <!--country list-->
     <string-array name="country_name">
         <item>Argentina</item>
         <item>Australia</item>
@@ -74,7 +69,6 @@
         <item>United States</item>
         <item>Venezuela</item>
     </string-array>
-
     <string-array name="country_code">
         <item>AR</item>
         <item>AU</item>
@@ -132,6 +126,7 @@
         <item>VE</item>
     </string-array>
 
+    <!--language list-->
     <string-array name="language_names">
         <item>Arabic</item>
         <item>German</item>
@@ -147,7 +142,6 @@
         <item>Swedish</item>
         <item>Chinese</item>
     </string-array>
-
     <string-array name="language_codes">
         <item>ar</item>
         <item>de</item>
@@ -165,8 +159,10 @@
     </string-array>
 
     <!--Error messages-->
-    <string name="no_data_found">No news available according to your country/language selection or search result.</string>
-    <string name="some_error">Ooops, \n Something went wrong. \n Let\'s try again also check your network.</string>
+    <string name="no_results">No Results.</string>
+    <string name="no_news_found">No news found.</string>
+    <string name="no_data_found_fitler">No news available, as per the applied filter. \nSo, please try again.</string>
+    <string name="some_error">Oops, \n Something went wrong. \n Let\'s try again also check your network.</string>
     <string name="try_again">Try Again</string>
-    <string name="search_text">It seems like you haven\'t searched for anything yet. \nDon\'t worry, our vast collection of news articles is at your fingertips! Use the search bar above to discover the latest updates, trending topics, or explore specific interests.</string>
+    <string name="loading">Loading</string>
 </resources>
