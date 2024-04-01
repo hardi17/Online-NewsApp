@@ -15,26 +15,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+        android:theme="@style/Theme.NewsAppMVVMArchitecture"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.searchactivity.SearchActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".ui.languageactivity.LanguagesActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".ui.countryactivity.CountriesActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".ui.newslist.NewsListActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".ui.newssources.NewsSourcesActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".ui.topheadline.TopHeadlineActivity"
-            android:launchMode="singleTask" />
         <activity
             android:name=".ui.mainactivity.MainActivity"
             android:exported="true">

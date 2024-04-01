@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.data.repository.TopHeadlineRepository
 import com.hardi.newsapp.ui.base.UiState
+import com.hardi.newsapp.utils.AppConstant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,9 +23,13 @@ class TopHeadlineViewModel @Inject constructor(private val topHeadlineRepository
 
     val uiState: StateFlow<UiState<List<Article>>> = _uiState
 
-    fun fetchNews(country: String) {
+    init {
+        fetchNews()
+    }
+
+    fun fetchNews() {
         viewModelScope.launch {
-            topHeadlineRepository.getTopHeadlines(country)
+            topHeadlineRepository.getTopHeadlines(AppConstant.DEFAULT_COUNTRY)
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
