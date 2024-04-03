@@ -8,7 +8,6 @@ import com.hardi.newsapp.ui.base.UiState
 import com.hardi.newsapp.utils.AppConstant
 import com.hardi.newsapp.utils.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -19,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TopHeadlineViewModel @Inject constructor(
     private val topHeadlineRepository: TopHeadlineRepository,
-    private val dispatcherProvider: DispatcherProvider) :
+    private val dispatcherProvider: DispatcherProvider
+) :
     ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<List<Article>>>(UiState.Loading)

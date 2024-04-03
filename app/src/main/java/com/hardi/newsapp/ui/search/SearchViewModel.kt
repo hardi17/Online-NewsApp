@@ -9,7 +9,6 @@ import com.hardi.newsapp.utils.AppConstant.DEBOUNCE_TIMEOUT
 import com.hardi.newsapp.utils.AppConstant.MIN_SEARCH_CHAR
 import com.hardi.newsapp.utils.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -47,7 +46,7 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             query.debounce(DEBOUNCE_TIMEOUT)
                 .filter {
-                    if (it.isNotEmpty() && it.trim().length >= MIN_SEARCH_CHAR) {
+                    if (it.isNotEmpty() && it.length >= MIN_SEARCH_CHAR) {
                         return@filter true
                     } else {
                         _uiState.value = UiState.Success(emptyList())
