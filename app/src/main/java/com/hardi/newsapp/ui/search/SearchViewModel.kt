@@ -43,7 +43,7 @@ class SearchViewModel @Inject constructor(private val searchNewsRepository: Sear
         viewModelScope.launch {
             query.debounce(DEBOUNCE_TIMEOUT)
                 .filter {
-                    if (it.isNotEmpty() && it.length >= MIN_SEARCH_CHAR) {
+                    if (it.isNotEmpty() && it.trim().length >= MIN_SEARCH_CHAR) {
                         return@filter true
                     } else {
                         _uiState.value = UiState.Success(emptyList())

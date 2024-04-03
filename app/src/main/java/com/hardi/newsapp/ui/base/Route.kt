@@ -9,6 +9,9 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Source
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.hardi.newsapp.R
+import com.hardi.newsapp.utils.AppConstant.COUNTRY_ID
+import com.hardi.newsapp.utils.AppConstant.LANG_ID
+import com.hardi.newsapp.utils.AppConstant.SOURCE_ID
 
 sealed class Route(
     val name: String,
@@ -23,7 +26,7 @@ sealed class Route(
 
     object NewsList :
         Route(
-            "newslist/{sourceId}/{countryId}/{langId}",
+            "newslist/{$SOURCE_ID}/{$COUNTRY_ID}/{$LANG_ID}",
             R.string.new_sources,
             Icons.Default.Newspaper
         ) {

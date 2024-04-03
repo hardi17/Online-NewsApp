@@ -23,11 +23,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hardi.newsapp.R
 import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.ui.base.UiState
-import com.hardi.newsapp.ui.reusable.ArticleUI
-import com.hardi.newsapp.ui.reusable.ShowDefaultMessage
-import com.hardi.newsapp.ui.reusable.ShowError
-import com.hardi.newsapp.ui.reusable.ShowLoading
-import com.hardi.newsapp.ui.reusable.TopAppBarWithOutIconUI
+import com.hardi.newsapp.ui.common.ArticleUI
+import com.hardi.newsapp.ui.common.ShowDefaultMessage
+import com.hardi.newsapp.ui.common.ShowError
+import com.hardi.newsapp.ui.common.ShowLoading
+import com.hardi.newsapp.ui.common.TopAppBarWithOutIconUI
 
 @Composable
 fun SearchNewsRoute(
