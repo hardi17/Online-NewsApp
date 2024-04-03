@@ -4,26 +4,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hardi.newsapp.R
 import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.ui.base.UiState
-import com.hardi.newsapp.ui.reusable.ArticleUI
-import com.hardi.newsapp.ui.reusable.ShowError
-import com.hardi.newsapp.ui.reusable.ShowLoading
-import com.hardi.newsapp.ui.reusable.TopAppBarWithOutIconUI
+import com.hardi.newsapp.ui.common.ArticleUI
+import com.hardi.newsapp.ui.common.ShowError
+import com.hardi.newsapp.ui.common.ShowLoading
+import com.hardi.newsapp.ui.common.TopAppBarWithOutIconUI
 
 @Composable
 fun TopHeadlineroute(

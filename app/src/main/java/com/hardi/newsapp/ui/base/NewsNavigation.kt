@@ -34,6 +34,9 @@ import com.hardi.newsapp.ui.newslist.NewsListRoute
 import com.hardi.newsapp.ui.newssources.NewsSourceRoute
 import com.hardi.newsapp.ui.search.SearchNewsRoute
 import com.hardi.newsapp.ui.topheadline.TopHeadlineroute
+import com.hardi.newsapp.utils.AppConstant.COUNTRY_ID
+import com.hardi.newsapp.utils.AppConstant.LANG_ID
+import com.hardi.newsapp.utils.AppConstant.SOURCE_ID
 
 @Preview
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -66,8 +69,8 @@ fun AppNavigationBar() {
                         navHostController.navigate(
                             Route.NewsList.passArgs(
                                 it,
-                                "{countryId}",
-                                "{langId}"
+                                "{$COUNTRY_ID}",
+                                "{$LANG_ID}"
                             )
                         )
                     }
@@ -78,8 +81,8 @@ fun AppNavigationBar() {
                     onLanguageClick = {
                         navHostController.navigate(
                             Route.NewsList.passArgs(
-                                "{sourceId}",
-                                "{countryId}",
+                                "{$SOURCE_ID}",
+                                "{$COUNTRY_ID}",
                                 it
                             )
                         )
@@ -92,9 +95,9 @@ fun AppNavigationBar() {
                     onCountryClick = {
                         navHostController.navigate(
                             Route.NewsList.passArgs(
-                                "{sourceId}",
+                                "{$SOURCE_ID}",
                                 it,
-                                "{langId}"
+                                "{$LANG_ID}"
                             )
                         )
                     }
@@ -113,9 +116,9 @@ fun AppNavigationBar() {
             composable(
                 route = Route.NewsList.name,
                 arguments = listOf(
-                    navArgument("sourceId") { type = NavType.StringType },
-                    navArgument("countryId") { type = NavType.StringType },
-                    navArgument("langId") { type = NavType.StringType }
+                    navArgument(SOURCE_ID) { type = NavType.StringType },
+                    navArgument(COUNTRY_ID) { type = NavType.StringType },
+                    navArgument(LANG_ID) { type = NavType.StringType }
                 )) {
                 NewsListRoute(
                     onBakPress = {
