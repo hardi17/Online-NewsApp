@@ -9,6 +9,7 @@ import com.hardi.newsapp.ui.base.UiState
 import com.hardi.newsapp.utils.AppConstant.COUNTRY_ID
 import com.hardi.newsapp.utils.AppConstant.LANG_ID
 import com.hardi.newsapp.utils.AppConstant.SOURCE_ID
+import com.hardi.newsapp.utils.DispatcherProvider
 import com.hardi.newsapp.utils.ValidationUtils.checkIfValidArgNews
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class NewsListViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val topHeadlineRepository: TopHeadlineRepository
+    private val topHeadlineRepository: TopHeadlineRepository,
+    private val dispatcherProvider: DispatcherProvider
 ) :
     ViewModel() {
 
@@ -48,7 +50,7 @@ class NewsListViewModel @Inject constructor(
     private fun fetchNewsBySource(sources: String) {
         viewModelScope.launch {
             topHeadlineRepository.getNewsBySources(sources)
-                .flowOn(Dispatchers.IO)
+                .flowOn(dispatcherProvider.io)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
                 }.collect() {
@@ -60,6 +62,7 @@ class NewsListViewModel @Inject constructor(
     private fun fetchNewsByCountry(country: String) {
         viewModelScope.launch {
             topHeadlineRepository.getNewsByCountry(country)
+                .flowOn(dispatcherProvider.io)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
                 }.collect() {
@@ -71,6 +74,7 @@ class NewsListViewModel @Inject constructor(
     private fun fetchNewsByLanguage(language: String) {
         viewModelScope.launch {
             topHeadlineRepository.getNewsByLanguage(language)
+                .flowOn(dispatcherProvider.io)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
                 }.collect() {
