@@ -9,7 +9,6 @@ import com.hardi.newsapp.utils.AppConstant.DEBOUNCE_TIMEOUT
 import com.hardi.newsapp.utils.AppConstant.MIN_SEARCH_CHAR
 import com.hardi.newsapp.utils.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
