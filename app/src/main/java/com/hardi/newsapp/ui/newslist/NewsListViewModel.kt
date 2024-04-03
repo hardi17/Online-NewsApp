@@ -6,6 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.data.repository.TopHeadlineRepository
 import com.hardi.newsapp.ui.base.UiState
+import com.hardi.newsapp.utils.AppConstant.COUNTRY_ID
+import com.hardi.newsapp.utils.AppConstant.LANG_ID
+import com.hardi.newsapp.utils.AppConstant.SOURCE_ID
 import com.hardi.newsapp.utils.ValidationUtils.checkIfValidArgNews
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -31,12 +34,12 @@ class NewsListViewModel @Inject constructor(
     }
 
     private fun fetchNewsByfilter() {
-        if (checkIfValidArgNews(savedStateHandle.get<String>("sourceId").toString())) {
-            fetchNewsBySource(savedStateHandle.get<String>("sourceId").toString())
-        } else if (checkIfValidArgNews(savedStateHandle.get<String>("countryId").toString())) {
-            fetchNewsByCountry(savedStateHandle.get<String>("countryId").toString())
+        if (checkIfValidArgNews(savedStateHandle.get<String>(SOURCE_ID).toString())) {
+            fetchNewsBySource(savedStateHandle.get<String>(SOURCE_ID).toString())
+        } else if (checkIfValidArgNews(savedStateHandle.get<String>(COUNTRY_ID).toString())) {
+            fetchNewsByCountry(savedStateHandle.get<String>(COUNTRY_ID).toString())
         } else {
-            fetchNewsByLanguage(savedStateHandle.get<String>("langId").toString())
+            fetchNewsByLanguage(savedStateHandle.get<String>(LANG_ID).toString())
         }
 
     }
