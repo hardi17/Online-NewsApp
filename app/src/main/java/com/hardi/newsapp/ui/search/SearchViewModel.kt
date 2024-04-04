@@ -1,5 +1,6 @@
 package com.hardi.newsapp.ui.search
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hardi.newsapp.data.model.Article
@@ -22,7 +23,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchNewsRepository: SearchNewsRepository,
@@ -49,7 +49,7 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             query.debounce(DEBOUNCE_TIMEOUT)
                 .filter {
-                    if (it.isNotEmpty() && it.trim().length >= MIN_SEARCH_CHAR) {
+                    if (it.isNotEmpty() && it.length >= MIN_SEARCH_CHAR) {
                         return@filter true
                     } else {
                         _uiState.value = UiState.Success(emptyList())
@@ -61,6 +61,7 @@ class SearchViewModel @Inject constructor(
                     _uiState.value = UiState.Loading
                     return@flatMapLatest searchNewsRepository.getSearchNews(it)
                         .catch { e ->
+                            Log.d("failed", "333")
                             _uiState.value = UiState.Error(e.toString())
                         }
                 }
