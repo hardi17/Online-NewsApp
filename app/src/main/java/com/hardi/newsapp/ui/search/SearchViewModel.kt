@@ -1,6 +1,5 @@
 package com.hardi.newsapp.ui.search
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hardi.newsapp.data.model.Article
@@ -59,7 +58,6 @@ class SearchViewModel @Inject constructor(
                     _uiState.value = UiState.Loading
                     return@flatMapLatest searchNewsRepository.getSearchNews(it)
                         .catch { e ->
-                            Log.d("failed", "333")
                             _uiState.value = UiState.Error(e.toString())
                         }
                 }
