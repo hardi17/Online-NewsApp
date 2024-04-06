@@ -7,8 +7,8 @@ import com.hardi.newsapp.data.repository.SearchNewsRepository
 import com.hardi.newsapp.ui.base.UiState
 import com.hardi.newsapp.utils.AppConstant.DEBOUNCE_TIMEOUT
 import com.hardi.newsapp.utils.AppConstant.MIN_SEARCH_CHAR
+import com.hardi.newsapp.utils.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -21,7 +21,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val searchNewsRepository: SearchNewsRepository) :
+class SearchViewModel @Inject constructor(
+    private val searchNewsRepository: SearchNewsRepository,
+    private val dispatcherProvider: DispatcherProvider
+) :
     ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<List<Article>>>(UiState.Loading)
@@ -43,7 +46,7 @@ class SearchViewModel @Inject constructor(private val searchNewsRepository: Sear
         viewModelScope.launch {
             query.debounce(DEBOUNCE_TIMEOUT)
                 .filter {
-                    if (it.isNotEmpty() && it.trim().length >= MIN_SEARCH_CHAR) {
+                    if (it.isNotEmpty() && it.length >= MIN_SEARCH_CHAR) {
                         return@filter true
                     } else {
                         _uiState.value = UiState.Success(emptyList())
@@ -58,7 +61,7 @@ class SearchViewModel @Inject constructor(private val searchNewsRepository: Sear
                             _uiState.value = UiState.Error(e.toString())
                         }
                 }
-                .flowOn(Dispatchers.IO)
+                .flowOn(dispatcherProvider.io)
                 .collect() {
                     _uiState.value = UiState.Success(it)
                 }

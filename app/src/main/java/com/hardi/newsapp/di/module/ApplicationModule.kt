@@ -6,6 +6,8 @@ import com.hardi.newsapp.di.BaseUrl
 import com.hardi.newsapp.di.NetworkApiKey
 import com.hardi.newsapp.utils.AppConstant.API_KEY
 import com.hardi.newsapp.utils.AppConstant.BASE_URL
+import com.hardi.newsapp.utils.DefaultDispatcherProvider
+import com.hardi.newsapp.utils.DispatcherProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,4 +57,8 @@ class ApplicationModule {
             .build()
             .create(NetworkService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideDispatcher() : DispatcherProvider = DefaultDispatcherProvider()
 }
