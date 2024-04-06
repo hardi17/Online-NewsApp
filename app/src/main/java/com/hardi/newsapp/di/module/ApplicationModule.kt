@@ -1,8 +1,11 @@
 package com.hardi.newsapp.di.module
 
+import android.content.Context
+import androidx.room.Room
 import com.hardi.newsapp.data.api.ApiKeyInterceptor
 import com.hardi.newsapp.data.api.NetworkService
 import com.hardi.newsapp.di.BaseUrl
+import com.hardi.newsapp.di.DatabaseName
 import com.hardi.newsapp.di.NetworkApiKey
 import com.hardi.newsapp.utils.AppConstant.API_KEY
 import com.hardi.newsapp.utils.AppConstant.BASE_URL
@@ -11,7 +14,13 @@ import com.hardi.newsapp.utils.DispatcherProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import me.amitshekhar.newsapp.utils.InternetConnected
+import me.amitshekhar.newsapp.utils.NetworkHelper
+import me.hardi.newsapp.data.local.AppRoomDataBase
+import me.hardi.newsapp.data.local.AppRoomDatabaseService
+import me.hardi.newsapp.data.local.DatabaseService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -61,4 +70,33 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun provideDispatcher() : DispatcherProvider = DefaultDispatcherProvider()
+
+    @Provides
+    @Singleton
+    fun provideNetworkHelper(@ApplicationContext context: Context): NetworkHelper {
+        return InternetConnected(context)
+    }
+
+    @DatabaseName
+    @Provides
+    fun provideDatabaseName(): String = "news-database"
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(
+        @ApplicationContext context: Context,
+        @DatabaseName databaseName: String
+    ): AppRoomDataBase {
+        return Room.databaseBuilder(
+            context,
+            AppRoomDataBase::class.java,
+            databaseName
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabaseService(appDatabase: AppRoomDataBase): DatabaseService {
+        return AppRoomDatabaseService(appDatabase)
+    }
 }

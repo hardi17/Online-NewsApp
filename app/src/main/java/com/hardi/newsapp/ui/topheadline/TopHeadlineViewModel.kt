@@ -8,26 +8,34 @@ import com.hardi.newsapp.ui.base.UiState
 import com.hardi.newsapp.utils.AppConstant
 import com.hardi.newsapp.utils.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import me.amitshekhar.newsapp.utils.NetworkHelper
+import me.hardi.newsapp.data.local.entity.ArticleEntity
 import javax.inject.Inject
 
 @HiltViewModel
 class TopHeadlineViewModel @Inject constructor(
     private val topHeadlineRepository: TopHeadlineRepository,
-    private val dispatcherProvider: DispatcherProvider
+    private val dispatcherProvider: DispatcherProvider,
+    networkHelper: NetworkHelper
 ) :
     ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState<List<Article>>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState<List<ArticleEntity>>>(UiState.Loading)
 
-    val uiState: StateFlow<UiState<List<Article>>> = _uiState
+    val uiState: StateFlow<UiState<List<ArticleEntity>>> = _uiState
 
     init {
-        fetchNews()
+        if (networkHelper.isInternetConnected()) {
+            fetchNews()
+        } else {
+            fetchNewsFromDB()
+        }
     }
 
     private fun fetchNews() {
@@ -36,11 +44,22 @@ class TopHeadlineViewModel @Inject constructor(
                 .flowOn(dispatcherProvider.io)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
-                }.collect() {
+                }.collect {
                     _uiState.value = UiState.Success(it)
                 }
         }
     }
 
+    private fun fetchNewsFromDB() {
+        viewModelScope.launch {
+            topHeadlineRepository.getArticlesDirectlyFromDB()
+                .flowOn(Dispatchers.IO)
+                .catch { e ->
+                    _uiState.value = UiState.Error(e.toString())
+                }.collect {
+                    _uiState.value = UiState.Success(it)
+                }
+        }
+    }
 
 }

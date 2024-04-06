@@ -20,6 +20,9 @@ android {
     }
 
     buildTypes {
+        debug{
+            buildConfigField("String", "API_KEY", "\"<YOUR_API_KEY>\"")
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -68,6 +71,11 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.44"
     kapt "com.google.dagger:hilt-compiler:2.44"
     implementation 'androidx.browser:browser:1.4.0'
+
+    //room database
+    implementation 'androidx.room:room-runtime:2.5.0'
+    implementation 'androidx.room:room-ktx:2.5.0'
+    kapt 'androidx.room:room-compiler:2.5.0'
 
     //for unit testing
     testImplementation 'junit:junit:4.13.2'

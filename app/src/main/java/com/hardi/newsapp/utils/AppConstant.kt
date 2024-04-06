@@ -1,5 +1,7 @@
 package com.hardi.newsapp.utils
 
+import com.hardi.newsapp.BuildConfig
+
 object AppConstant {
 
     const val DEBOUNCE_TIMEOUT = 200L
@@ -9,5 +11,5 @@ object AppConstant {
     const val LANG_ID = "langId"
     const val SOURCE_ID = "sourceId"
     const val BASE_URL = "https://newsapi.org/v2/"
-    const val API_KEY = "c02ab86e9761496faebbf29d2c96fb06"
+    const val API_KEY = BuildConfig.API_KEY
 }
