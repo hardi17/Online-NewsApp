@@ -14,6 +14,13 @@ interface NetworkService {
     @GET("top-headlines")
     suspend fun getTopHeadlines(@Query("country") country: String): TopHeadlinesResponse
 
+    @GET("top-headlines")
+    suspend fun getTopHeadlinesPagination(
+        @Query("country") country: String,
+        @Query("page") page: Int,
+        @Query("pageSize") pageSize: Int,
+    ): TopHeadlinesResponse
+
     @GET("top-headlines/sources")
     suspend fun getNewsSources(): NewsSourcesResponse
 

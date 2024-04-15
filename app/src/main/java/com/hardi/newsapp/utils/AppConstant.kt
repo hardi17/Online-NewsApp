@@ -10,6 +10,8 @@ object AppConstant {
     const val COUNTRY_ID = "countryId"
     const val LANG_ID = "langId"
     const val SOURCE_ID = "sourceId"
+    const val INITIAL_PAGE = 1
+    const val PAGE_SIZE = 10
     const val BASE_URL = "https://newsapi.org/v2/"
     const val API_KEY = BuildConfig.API_KEY
 }

@@ -2,6 +2,9 @@ package com.hardi.newsapp.ui.common
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.SmartScreen
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,7 +32,7 @@ fun TopAppBarWithOutIconUI(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarWithIconUI(
+fun TopAppBarWithBackIconUI(
     title: String,
     onIconClick: () -> Unit
 ) {
@@ -47,6 +50,33 @@ fun TopAppBarWithIconUI(
                 onClick = { onIconClick() }) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "null"
+                )
+            }
+        })
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopAppBarWithActionIconUI(
+    title: String,
+    onActionClick: () -> Unit
+) {
+    TopAppBar(
+        colors = TopAppBarDefaults.smallTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = Color.White,
+            actionIconContentColor = Color.White
+        ),
+        title = {
+            Text(text = title)
+        },
+        actions = {
+            IconButton(onClick = {
+                onActionClick()
+            }) {
+                Icon(
+                    imageVector = Icons.Default.SmartScreen,
                     contentDescription = "null"
                 )
             }

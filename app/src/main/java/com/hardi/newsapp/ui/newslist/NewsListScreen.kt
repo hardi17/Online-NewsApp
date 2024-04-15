@@ -17,11 +17,11 @@ import com.hardi.newsapp.ui.base.UiState
 import com.hardi.newsapp.ui.common.ArticleUI
 import com.hardi.newsapp.ui.common.ShowError
 import com.hardi.newsapp.ui.common.ShowLoading
-import com.hardi.newsapp.ui.common.TopAppBarWithIconUI
+import com.hardi.newsapp.ui.common.TopAppBarWithBackIconUI
 
 @Composable
 fun NewsListRoute(
-    onBakPress: () -> Unit,
+    onBackPress: () -> Unit,
     onNewsClick: (url: String) -> Unit,
     viewModel: NewsListViewModel = hiltViewModel(),
 ) {
@@ -29,10 +29,10 @@ fun NewsListRoute(
 
     Scaffold(
         topBar = {
-            TopAppBarWithIconUI(
+            TopAppBarWithBackIconUI(
                 title = stringResource(id = R.string.news_list_by_selection)
             ) {
-                onBakPress()
+                onBackPress()
             }
         }, content = { paddingValues ->
             Column(

@@ -37,6 +37,7 @@ import com.hardi.newsapp.ui.topheadline.TopHeadlineroute
 import com.hardi.newsapp.utils.AppConstant.COUNTRY_ID
 import com.hardi.newsapp.utils.AppConstant.LANG_ID
 import com.hardi.newsapp.utils.AppConstant.SOURCE_ID
+import me.hardi.newsapp.ui.paggination.PaginationArticleRoute
 
 @Preview
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -60,7 +61,20 @@ fun AppNavigationBar() {
                 TopHeadlineroute(
                     onNewsClick = {
                         openCustomChromeTab(context, it)
+                    },
+                    onPaginationClick = {
+                        navHostController.navigate(Route.TopHeadlinePagination.name)
                     }
+                )
+            }
+            composable(route = Route.TopHeadlinePagination.name) {
+                PaginationArticleRoute(
+                    onBackClick = {
+                        navHostController.popBackStack()
+                    },
+                    onNewsClick = {
+                        openCustomChromeTab(context, it)
+                    },
                 )
             }
             composable(route = Route.NewsSource.name) {
@@ -121,7 +135,7 @@ fun AppNavigationBar() {
                     navArgument(LANG_ID) { type = NavType.StringType }
                 )) {
                 NewsListRoute(
-                    onBakPress = {
+                    onBackPress = {
                         navHostController.popBackStack()
                     },
                     onNewsClick = {

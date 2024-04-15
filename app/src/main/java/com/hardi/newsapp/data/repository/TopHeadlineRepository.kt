@@ -1,8 +1,12 @@
 package com.hardi.newsapp.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.hardi.newsapp.data.api.NetworkService
 import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.data.roomdatabase.entity.toArticleEntity
+import com.hardi.newsapp.utils.AppConstant.PAGE_SIZE
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
@@ -34,6 +38,17 @@ class TopHeadlineRepository @Inject constructor(
 
     fun getArticlesDirectlyFromDB(): Flow<List<ArticleEntity>> {
         return databaseService.getArticles()
+    }
+
+    fun getTopHeadlinesPagination(): Flow<PagingData<Article>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE
+            ),
+            pagingSourceFactory = {
+                PaginationTopheadline(networkService)
+            }
+        ).flow
     }
 
     fun getNewsBySources(sources : String): Flow<List<Article>>{
