@@ -34,7 +34,7 @@ class CountriesViewModel @Inject constructor(
             countriesRepository.getCountries()
                 .flowOn(dispatcherProvider.io)
                 .catch { e ->
-                    _uiState.value = UiState.Error(e.toString())
+                    _uiState.value = UiState.Error(e)
                 }.collect() {
                     _uiState.value = UiState.Success(it)
                 }

@@ -115,7 +115,7 @@ fun SearchNews(
         }
 
         is UiState.Error -> {
-            ShowError(uiState.message)
+            ShowError(uiState.message.toString())
         }
     }
 }

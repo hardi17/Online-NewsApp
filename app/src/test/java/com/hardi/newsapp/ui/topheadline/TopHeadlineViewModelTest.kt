@@ -43,6 +43,9 @@ class TopHeadlineViewModelTest {
     @Test
     fun fetchNews_whenRepositoryResponse_success_shouldSetSuccessUiState() {
         runTest {
+            doReturn(true)
+                .`when`(networkHelper)
+                .isInternetConnected()
             doReturn(flowOf(emptyList<Article>()))
                 .`when`(topHeadlineRepository)
                 .getTopHeadlines(AppConstant.DEFAULT_COUNTRY)
@@ -53,15 +56,19 @@ class TopHeadlineViewModelTest {
                 cancelAndConsumeRemainingEvents()
             }
             verify(topHeadlineRepository, times(1)).getTopHeadlines(AppConstant.DEFAULT_COUNTRY)
+            verify(networkHelper, times(1)).isInternetConnected()
         }
     }
 
     @Test
     fun fetchNews_whenRepositoryResponse_error_shouldSetErrorUiState() {
         runTest {
-            val errorMsg = "Testing error message"
+            val exception = IllegalStateException("Testing error message")
+            doReturn(true)
+                .`when`(networkHelper)
+                .isInternetConnected()
             doReturn(flow<List<Article>> {
-                throw IllegalStateException(errorMsg)
+                throw exception
             })
                 .`when`(topHeadlineRepository)
                 .getTopHeadlines(AppConstant.DEFAULT_COUNTRY)
@@ -69,12 +76,14 @@ class TopHeadlineViewModelTest {
                 TopHeadlineViewModel(topHeadlineRepository, dispatcherProvider, networkHelper)
             viewModel.uiState.test {
                 assertEquals(
-                    UiState.Error(IllegalStateException(errorMsg).toString()),
-                    awaitItem()
+                    UiState.Error(exception,null).toString(),
+                    awaitItem().toString()
                 )
                 cancelAndConsumeRemainingEvents()
             }
+
             verify(topHeadlineRepository, times(1)).getTopHeadlines(AppConstant.DEFAULT_COUNTRY)
+            verify(networkHelper, times(1)).isInternetConnected()
         }
     }
 

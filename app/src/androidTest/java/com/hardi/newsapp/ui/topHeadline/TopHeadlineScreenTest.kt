@@ -9,8 +9,9 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollToNode
 import com.hardi.newsapp.R
-import com.hardi.newsapp.ui.base.UiState
-import com.hardi.newsapp.ui.topheadline.TopHeadlineScreen
+import com.hardi.newsapp.ui.common.ShowError
+import com.hardi.newsapp.ui.common.ShowLoading
+import com.hardi.newsapp.ui.topheadline.ArticleList
 import me.hardi.newsapp.data.local.entity.ArticleEntity
 import me.hardi.newsapp.data.local.entity.SourceEntity
 import org.junit.Rule
@@ -24,9 +25,7 @@ class TopHeadlineScreenTest {
     @Test
     fun tophHeadlinscreen_showing_loading_whileUiStateIs_laoding() {
         composeTestRule.setContent {
-            TopHeadlineScreen(
-                uiState = UiState.Loading,
-                onNewsClick = {})
+            ShowLoading()
         }
 
         composeTestRule
@@ -37,8 +36,8 @@ class TopHeadlineScreenTest {
     @Test
     fun tophHeadlinscreen_showing_articleList_whileUiStateIs_sucess() {
         composeTestRule.setContent {
-            TopHeadlineScreen(
-                uiState = UiState.Success(testArticleList),
+            ArticleList(
+                articles = testArticleList,
                 onNewsClick = {})
         }
 
@@ -71,9 +70,7 @@ class TopHeadlineScreenTest {
     fun tophHeadlinscreen_showing_error_whileUiStateIs_error() {
         val errorMsg = "Testing error"
         composeTestRule.setContent {
-            TopHeadlineScreen(
-                uiState = UiState.Error(errorMsg),
-                onNewsClick = {})
+            ShowError(text = errorMsg)
         }
 
         composeTestRule

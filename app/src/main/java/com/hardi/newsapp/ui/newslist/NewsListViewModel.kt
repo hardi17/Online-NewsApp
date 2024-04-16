@@ -10,7 +10,9 @@ import com.hardi.newsapp.utils.AppConstant.COUNTRY_ID
 import com.hardi.newsapp.utils.AppConstant.LANG_ID
 import com.hardi.newsapp.utils.AppConstant.SOURCE_ID
 import com.hardi.newsapp.utils.DispatcherProvider
+import com.hardi.newsapp.utils.NoInternetException
 import com.hardi.newsapp.utils.ValidationUtils.checkIfValidArgNews
+import com.hardi.newsapp.utils.internetcheck.NetworkHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +25,8 @@ import javax.inject.Inject
 class NewsListViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val topHeadlineRepository: TopHeadlineRepository,
-    private val dispatcherProvider: DispatcherProvider
+    private val dispatcherProvider: DispatcherProvider,
+    private val networkHelper: NetworkHelper
 ) :
     ViewModel() {
 
@@ -34,7 +37,7 @@ class NewsListViewModel @Inject constructor(
         fetchNewsByfilter()
     }
 
-    private fun fetchNewsByfilter() {
+    fun fetchNewsByfilter() {
         if (checkIfValidArgNews(savedStateHandle.get<String>(SOURCE_ID).toString())) {
             fetchNewsBySource(savedStateHandle.get<String>(SOURCE_ID).toString())
         } else if (checkIfValidArgNews(savedStateHandle.get<String>(COUNTRY_ID).toString())) {
@@ -48,37 +51,58 @@ class NewsListViewModel @Inject constructor(
 
     private fun fetchNewsBySource(sources: String) {
         viewModelScope.launch {
-            topHeadlineRepository.getNewsBySources(sources)
-                .flowOn(dispatcherProvider.io)
-                .catch { e ->
-                    _uiState.value = UiState.Error(e.toString())
-                }.collect() {
-                    _uiState.value = UiState.Success(it)
-                }
+            if (networkHelper.isInternetConnected()) {
+                topHeadlineRepository.getNewsBySources(sources)
+                    .flowOn(dispatcherProvider.io)
+                    .catch {e ->
+                        _uiState.value = UiState.Error(e)
+                    }.collect() {
+                        _uiState.value = UiState.Success(it)
+                    }
+            } else {
+                _uiState.value = UiState.Error(
+                    throwable = NoInternetException()
+                )
+                return@launch
+            }
         }
     }
 
     private fun fetchNewsByCountry(country: String) {
         viewModelScope.launch {
-            topHeadlineRepository.getNewsByCountry(country)
-                .flowOn(dispatcherProvider.io)
-                .catch { e ->
-                    _uiState.value = UiState.Error(e.toString())
-                }.collect() {
-                    _uiState.value = UiState.Success(it)
-                }
+            if (networkHelper.isInternetConnected()) {
+                topHeadlineRepository.getNewsByCountry(country)
+                    .flowOn(dispatcherProvider.io)
+                    .catch {e ->
+                        _uiState.value = UiState.Error(e)
+                    }.collect() {
+                        _uiState.value = UiState.Success(it)
+                    }
+            } else {
+                _uiState.value = UiState.Error(
+                    throwable = NoInternetException()
+                )
+                return@launch
+            }
         }
     }
 
     private fun fetchNewsByLanguage(language: String) {
         viewModelScope.launch {
-            topHeadlineRepository.getNewsByLanguage(language)
-                .flowOn(dispatcherProvider.io)
-                .catch { e ->
-                    _uiState.value = UiState.Error(e.toString())
-                }.collect() {
-                    _uiState.value = UiState.Success(it)
-                }
+            if (networkHelper.isInternetConnected()) {
+                topHeadlineRepository.getNewsByLanguage(language)
+                    .flowOn(dispatcherProvider.io)
+                    .catch {e ->
+                        _uiState.value = UiState.Error(e)
+                    }.collect() {
+                        _uiState.value = UiState.Success(it)
+                    }
+            } else {
+                _uiState.value = UiState.Error(
+                    throwable = NoInternetException()
+                )
+                return@launch
+            }
         }
     }
 

@@ -16,8 +16,10 @@ import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.ui.base.UiState
 import com.hardi.newsapp.ui.common.ArticleUI
 import com.hardi.newsapp.ui.common.ShowError
+import com.hardi.newsapp.ui.common.ShowErrorView
 import com.hardi.newsapp.ui.common.ShowLoading
 import com.hardi.newsapp.ui.common.TopAppBarWithBackIconUI
+import com.hardi.newsapp.utils.NoInternetException
 
 @Composable
 fun NewsListRoute(
@@ -38,14 +40,18 @@ fun NewsListRoute(
             Column(
                 modifier = Modifier.padding(paddingValues)
             ) {
-                NewsListScreen(uiState, onNewsClick)
+                NewsListScreen(uiState, onNewsClick, viewModel)
             }
         }
     )
 }
 
 @Composable
-fun NewsListScreen(uiState: UiState<List<Article>>, onNewsClick: (url: String) -> Unit) {
+fun NewsListScreen(
+    uiState: UiState<List<Article>>,
+    onNewsClick: (url: String) -> Unit,
+    viewModel: NewsListViewModel
+) {
     when (uiState) {
         is UiState.Success -> {
             if (uiState.data.isEmpty()) {
@@ -60,7 +66,15 @@ fun NewsListScreen(uiState: UiState<List<Article>>, onNewsClick: (url: String) -
         }
 
         is UiState.Error -> {
-            ShowError(uiState.message)
+            var errorText = stringResource(id = R.string.something_went_wrong)
+            if (uiState.throwable is NoInternetException) {
+                errorText = stringResource(id = R.string.network_error)
+            }
+            ShowErrorView(
+                text = errorText
+            ) {
+                viewModel.fetchNewsByfilter()
+            }
         }
     }
 }

@@ -13,10 +13,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hardi.newsapp.R
 import com.hardi.newsapp.ui.base.UiState
-import com.hardi.newsapp.ui.common.ShowError
+import com.hardi.newsapp.ui.common.ShowErrorView
 import com.hardi.newsapp.ui.common.ShowLoading
 import com.hardi.newsapp.ui.common.TopAppBarWithActionIconUI
 import com.hardi.newsapp.ui.common.TopHeadlineUI
+import com.hardi.newsapp.utils.NoInternetException
 import me.hardi.newsapp.data.local.entity.ArticleEntity
 
 @Composable
@@ -38,7 +39,7 @@ fun TopHeadlineroute(
             Column(
                 modifier = Modifier.padding(paddingValues)
             ) {
-                TopHeadlineScreen(uiState, onNewsClick)
+                TopHeadlineScreen(uiState, onNewsClick, viewModel)
             }
 
         }
@@ -46,10 +47,22 @@ fun TopHeadlineroute(
 }
 
 @Composable
-fun TopHeadlineScreen(uiState: UiState<List<ArticleEntity>>, onNewsClick: (url: String) -> Unit) {
+fun TopHeadlineScreen(
+    uiState: UiState<List<ArticleEntity>>,
+    onNewsClick: (url: String) -> Unit,
+    viewModel: TopHeadlineViewModel = hiltViewModel()
+) {
     when (uiState) {
         is UiState.Success -> {
-            ArticleList(uiState.data, onNewsClick)
+            if (uiState.data.isNotEmpty()) {
+                ArticleList(uiState.data, onNewsClick)
+            } else {
+                ShowErrorView(
+                    stringResource(id = R.string.network_error)
+                ) {
+                    viewModel.fetchNews()
+                }
+            }
         }
 
         is UiState.Loading -> {
@@ -57,7 +70,15 @@ fun TopHeadlineScreen(uiState: UiState<List<ArticleEntity>>, onNewsClick: (url: 
         }
 
         is UiState.Error -> {
-            ShowError(uiState.message)
+            var errorText = stringResource(id = R.string.something_went_wrong)
+            if (uiState.throwable is NoInternetException) {
+                errorText = stringResource(id = R.string.network_error)
+            }
+            ShowErrorView(
+                text = errorText
+            ) {
+                viewModel.fetchNews()
+            }
         }
     }
 }

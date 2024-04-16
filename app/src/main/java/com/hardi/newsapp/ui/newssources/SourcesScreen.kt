@@ -14,10 +14,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hardi.newsapp.R
 import com.hardi.newsapp.data.model.NewsSource
 import com.hardi.newsapp.ui.base.UiState
-import com.hardi.newsapp.ui.common.ShowError
+import com.hardi.newsapp.ui.common.ShowErrorView
 import com.hardi.newsapp.ui.common.ShowLoading
 import com.hardi.newsapp.ui.common.SourceUI
 import com.hardi.newsapp.ui.common.TopAppBarWithOutIconUI
+import com.hardi.newsapp.utils.NoInternetException
 
 @Composable
 fun NewsSourceRoute(
@@ -33,7 +34,7 @@ fun NewsSourceRoute(
             Column(
                 modifier = Modifier.padding(paddingValues)
             ) {
-                NewsSourceScreen(uiState, onSourceClick)
+                NewsSourceScreen(uiState, onSourceClick, viewModel)
             }
         })
 }
@@ -41,7 +42,8 @@ fun NewsSourceRoute(
 @Composable
 fun NewsSourceScreen(
     uiState: UiState<List<NewsSource>>,
-    onSourceClick: (sourceId: String) -> Unit
+    onSourceClick: (sourceId: String) -> Unit,
+    viewModel: SourcesViewModel
 ) {
     when (uiState) {
         is UiState.Success -> {
@@ -53,7 +55,15 @@ fun NewsSourceScreen(
         }
 
         is UiState.Error -> {
-            ShowError(uiState.message)
+            var errorText = stringResource(id = R.string.something_went_wrong)
+            if (uiState.throwable is NoInternetException) {
+                errorText = stringResource(id = R.string.network_error)
+            }
+            ShowErrorView(
+                text = errorText
+            ) {
+                viewModel.fetchNewsSources()
+            }
         }
 
     }

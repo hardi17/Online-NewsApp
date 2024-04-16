@@ -162,6 +162,8 @@
     <string name="no_results">No Results.</string>
     <string name="no_news_found">No news found.</string>
     <string name="no_data_found_fitler">No news available, as per the applied filter. \nSo, please try again.</string>
-    <string name="network_error">Oops, \n Something went wrong. \n Let\'s try again and check your network.</string>
+    <string name="network_error">No internet available. Let\'s try again.</string>
+    <string name="something_went_wrong">Oops, Something went wrong. \n Let\'s try again.</string>
     <string name="loading">Loading</string>
+    <string name="retry" >Retry</string>
 </resources>

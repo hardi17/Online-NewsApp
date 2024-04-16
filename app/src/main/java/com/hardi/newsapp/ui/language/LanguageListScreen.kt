@@ -56,7 +56,7 @@ fun LanguageListScreen(
         }
 
         is UiState.Error -> {
-            ShowError(uiState.message)
+            ShowError(uiState.message.toString())
         }
 
     }
