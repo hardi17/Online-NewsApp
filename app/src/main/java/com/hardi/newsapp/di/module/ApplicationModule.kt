@@ -2,6 +2,7 @@ package com.hardi.newsapp.di.module
 
 import android.content.Context
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.hardi.newsapp.data.api.ApiKeyInterceptor
 import com.hardi.newsapp.data.api.NetworkService
 import com.hardi.newsapp.di.BaseUrl
@@ -9,6 +10,7 @@ import com.hardi.newsapp.di.DatabaseName
 import com.hardi.newsapp.di.NetworkApiKey
 import com.hardi.newsapp.utils.AppConstant.API_KEY
 import com.hardi.newsapp.utils.AppConstant.BASE_URL
+import com.hardi.newsapp.utils.AppConstant.DATABASE_NAME
 import com.hardi.newsapp.utils.DefaultDispatcherProvider
 import com.hardi.newsapp.utils.DispatcherProvider
 import dagger.Module
@@ -79,7 +81,7 @@ class ApplicationModule {
 
     @DatabaseName
     @Provides
-    fun provideDatabaseName(): String = "news-database"
+    fun provideDatabaseName(): String = DATABASE_NAME
 
     @Provides
     @Singleton
@@ -98,5 +100,11 @@ class ApplicationModule {
     @Singleton
     fun provideDatabaseService(appDatabase: AppRoomDataBase): DatabaseService {
         return AppRoomDatabaseService(appDatabase)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWorkManager(@ApplicationContext context: Context) : WorkManager {
+        return WorkManager.getInstance(context)
     }
 }

@@ -14,4 +14,8 @@ object AppConstant {
     const val PAGE_SIZE = 10
     const val BASE_URL = "https://newsapi.org/v2/"
     const val API_KEY = BuildConfig.API_KEY
+
+    const val DATABASE_NAME = "news-database"
+    const val WORKMANAGER_NAME = "NewsWorkManager"
+    const val MORNING_TIME_FOR_UPDATE = 5
 }
