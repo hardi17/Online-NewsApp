@@ -12,8 +12,11 @@ An online news app makes it easy to read news articles on the intdernet. It offe
 - Coroutines : Simplify asynchronous programming for concurrent tasks.
 - Flow API : Handles streams of data asynchronously and applies transformations.
 - StateFlow : Represents a single updatable data value, commonly used for propagating state changes.
-- Retrofit and OkHttp :   Networking libraries for making network requests to RESTful APIs.
+- Retrofit and OkHttp : Networking libraries for making network requests to RESTful APIs.
 - WebView : Component for displaying web content within applications.
+- Room Database : For cache the news and show it when user's device is offline.
+- WorkManager : For periodically update or fetch the latest news headlines.
+- Pagination : Helps you load and display pages of news from a larger news list.
 - Instant Search : Real-time search feature providing immediate feedback to users.
 - APK Optimization : Minimizes the size of Android application packages for improved performance.
 
@@ -21,6 +24,9 @@ An online news app makes it easy to read news articles on the intdernet. It offe
 - Coil : For image loading library.
 - Jetpack compose : For native UI.
 - Dagger-Hilt : For dependency injection.
+- Workmanager : For scheduling fetch the data.
+- Pagination : For efficient data loading.
+- room-database : For local data storage.
 - Mockito, JUnit and Turbine : For testing.
 
 ## Screens 
@@ -56,7 +62,6 @@ An online news app makes it easy to read news articles on the intdernet. It offe
 |───com
     └───hardi
         ├───NewsApplication.kt
-        │
         └───newsapp
             ├───data
             │   ├───api
@@ -71,15 +76,29 @@ An online news app makes it easy to read news articles on the intdernet. It offe
             │   │       Source.kt
             │   │       TopHeadlinesResponse.kt
             │   │
-            │   └───repository
-            │           CountriesRepository.kt
-            │           LanguagesRepository.kt
-            │           NewsSourcesRepository.kt
-            │           SearchNewsRepository.kt
-            │           TopHeadlineRepository.kt
+            │   ├───repository
+            │   │       CountriesRepository.kt
+            │   │       LanguagesRepository.kt
+            │   │       NewsSourcesRepository.kt
+            │   │       PaginationTopheadline.kt
+            │   │       SearchNewsRepository.kt
+            │   │       TopHeadlineRepository.kt
+            │   │
+            │   └───roomdatabase
+            │       │   AppRoomDataBase.kt
+            │       │   AppRoomDatabaseService.kt
+            │       │   DatabaseService.kt
+            │       │
+            │       ├───dao
+            │       │       ArticleDao.kt
+            │       │
+            │       └───entity
+            │               ArticleEntity.kt
+            │               EntityUtils.kt
+            │               SourceEntity.kt
             │
             ├───di
-            │   ├───qualifiers.kt
+            │   │   qualifiers.kt
             │   │
             │   └───module
             │           ApplicationModule.kt
@@ -95,6 +114,7 @@ An online news app makes it easy to read news articles on the intdernet. It offe
             │   │       MessageLayout.kt
             │   │       SelectionListLayout.kt
             │   │       TopAppBarLayout.kt
+            │   │       TopHeadlineLayout.kt
             │   │
             │   ├───country
             │   │       CountriesViewModel.kt
@@ -115,6 +135,10 @@ An online news app makes it easy to read news articles on the intdernet. It offe
             │   │       SourcesScreen.kt
             │   │       SourcesViewModel.kt
             │   │
+            │   ├───paggination
+            │   │       PaginationViewmodel.kt
+            │   │       TopaheadlinePaginationScreen.kt
+            │   │
             │   ├───search
             │   │       SearchNewsScreen.kt
             │   │       SearchViewModel.kt
@@ -128,16 +152,19 @@ An online news app makes it easy to read news articles on the intdernet. It offe
             │           TopHeadlineScreen.kt
             │           TopHeadlineViewModel.kt
             │
-            └───utils
-                    AppConstant.kt
-                    DispatcherProvider.kt
-                    ValidationUtils.kt
-```
-## Future Implementations
-- Room database
-- Pagination 
-- WorkManager
+            ├───utils
+            │   │   AppConstant.kt
+            │   │   DispatcherProvider.kt
+            │   │   TimeUtils.kt
+            │   │   ValidationUtils.kt
+            │   │
+            │   └───internetcheck
+            │           NetworkHelper.kt
+            │
+            └───worker
+                    NewsWorkManager.kt
 
+```
 # If this project helps you in anyway, show your love ❤️ by putting a ⭐ on this project ✌️
 
 ## Contributing to the News App project
