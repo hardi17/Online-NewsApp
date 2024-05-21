@@ -16,7 +16,6 @@ import com.hardi.newsapp.ui.base.UiState
 import com.hardi.newsapp.ui.common.ShowError
 import com.hardi.newsapp.ui.common.ShowLoading
 import com.hardi.newsapp.ui.common.TopAppBarWithActionIconUI
-import com.hardi.newsapp.ui.common.TopAppBarWithOutIconUI
 import com.hardi.newsapp.ui.common.TopHeadlineUI
 import me.hardi.newsapp.data.local.entity.ArticleEntity
 

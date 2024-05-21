@@ -9,10 +9,10 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollToNode
 import com.hardi.newsapp.R
-import com.hardi.newsapp.data.model.Article
-import com.hardi.newsapp.data.model.Source
 import com.hardi.newsapp.ui.base.UiState
 import com.hardi.newsapp.ui.topheadline.TopHeadlineScreen
+import me.hardi.newsapp.data.local.entity.ArticleEntity
+import me.hardi.newsapp.data.local.entity.SourceEntity
 import org.junit.Rule
 import org.junit.Test
 
@@ -36,7 +36,7 @@ class TopHeadlineScreenTest {
 
     @Test
     fun tophHeadlinscreen_showing_articleList_whileUiStateIs_sucess() {
-        composeTestRule.setContent{
+        composeTestRule.setContent {
             TopHeadlineScreen(
                 uiState = UiState.Success(testArticleList),
                 onNewsClick = {})
@@ -59,10 +59,10 @@ class TopHeadlineScreenTest {
             )
 
         composeTestRule
-                .onNodeWithText(
-            testArticleList[2].title,
-            substring = true
-        )
+            .onNodeWithText(
+                testArticleList[2].title,
+                substring = true
+            )
             .assertExists()
             .assertHasClickAction()
     }
@@ -83,31 +83,25 @@ class TopHeadlineScreenTest {
 }
 
 private val testArticleList = listOf(
-    Article(
+    ArticleEntity(
         title = "test1",
         description = "for testing 1",
-        author = "",
-        publishedAt = "",
         url = "url1",
         imageUrl = "imageurl1",
-        source = Source(id = "0", name = "source0")
+        source = SourceEntity(id = "0", name = "source0")
     ),
-    Article(
+    ArticleEntity(
         title = "test2",
         description = "for testing 2",
-        author = "",
-        publishedAt = "",
         url = "url2",
         imageUrl = "imageurl2",
-        source = Source(id = "1", name = "source1")
+        source = SourceEntity(id = "1", name = "source1")
     ),
-    Article(
+    ArticleEntity(
         title = "test3",
         description = "for testing 3",
-        author = "",
-        publishedAt = "",
         url = "url3",
         imageUrl = "imageurl3",
-        source = Source(id = "2", name = "source2")
+        source = SourceEntity(id = "2", name = "source2")
     )
 )

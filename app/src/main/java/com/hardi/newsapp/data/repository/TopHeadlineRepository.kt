@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import me.hardi.newsapp.data.local.AppRoomDatabaseService
 import me.hardi.newsapp.data.local.DatabaseService
 import me.hardi.newsapp.data.local.entity.ArticleEntity
 import javax.inject.Inject
@@ -20,15 +19,16 @@ import javax.inject.Singleton
 @Singleton
 class TopHeadlineRepository @Inject constructor(
     private val networkService: NetworkService,
-    private val databaseService: DatabaseService){
+    private val databaseService: DatabaseService
+) {
 
-    fun getTopHeadlines(country : String): Flow<List<ArticleEntity>>{
+    fun getTopHeadlines(country: String): Flow<List<ArticleEntity>> {
         return flow {
             emit(networkService.getTopHeadlines(country))
         }.map {
             it.articles.map { article -> article.toArticleEntity() }
-        }.flatMapConcat{ articleEntity ->
-            flow{
+        }.flatMapConcat { articleEntity ->
+            flow {
                 emit(databaseService.deleteAllAndInsertAll(articleEntity))
             }
         }.flatMapConcat {
@@ -51,7 +51,7 @@ class TopHeadlineRepository @Inject constructor(
         ).flow
     }
 
-    fun getNewsBySources(sources : String): Flow<List<Article>>{
+    fun getNewsBySources(sources: String): Flow<List<Article>> {
         return flow {
             emit(networkService.getNewsBySources(sources))
         }.map {
@@ -59,7 +59,7 @@ class TopHeadlineRepository @Inject constructor(
         }
     }
 
-    fun getNewsByCountry(country : String): Flow<List<Article>>{
+    fun getNewsByCountry(country: String): Flow<List<Article>> {
         return flow {
             emit(networkService.getNewsByCountry(country))
         }.map {
@@ -67,7 +67,7 @@ class TopHeadlineRepository @Inject constructor(
         }
     }
 
-    fun getNewsByLanguage(langauge : String): Flow<List<Article>>{
+    fun getNewsByLanguage(langauge: String): Flow<List<Article>> {
         return flow {
             emit(networkService.getNewsByLanguage(langauge))
         }.map {

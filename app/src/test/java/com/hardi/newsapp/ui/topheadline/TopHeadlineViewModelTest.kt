@@ -7,6 +7,7 @@ import com.hardi.newsapp.ui.base.UiState
 import com.hardi.newsapp.utils.AppConstant
 import com.hardi.newsapp.utils.DispatcherProvider
 import com.hardi.newsapp.utils.TestDispatcherProvider
+import com.hardi.newsapp.utils.internetcheck.NetworkHelper
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
@@ -29,6 +30,9 @@ class TopHeadlineViewModelTest {
     @Mock
     private lateinit var topHeadlineRepository: TopHeadlineRepository
 
+    @Mock
+    private lateinit var networkHelper: NetworkHelper
+
     private lateinit var dispatcherProvider: DispatcherProvider
 
     @Before
@@ -42,7 +46,8 @@ class TopHeadlineViewModelTest {
             doReturn(flowOf(emptyList<Article>()))
                 .`when`(topHeadlineRepository)
                 .getTopHeadlines(AppConstant.DEFAULT_COUNTRY)
-            val viewModel = TopHeadlineViewModel(topHeadlineRepository, dispatcherProvider)
+            val viewModel =
+                TopHeadlineViewModel(topHeadlineRepository, dispatcherProvider, networkHelper)
             viewModel.uiState.test {
                 assertEquals(UiState.Success(emptyList<Article>()), awaitItem())
                 cancelAndConsumeRemainingEvents()
@@ -60,11 +65,13 @@ class TopHeadlineViewModelTest {
             })
                 .`when`(topHeadlineRepository)
                 .getTopHeadlines(AppConstant.DEFAULT_COUNTRY)
-            val viewModel = TopHeadlineViewModel(topHeadlineRepository, dispatcherProvider)
+            val viewModel =
+                TopHeadlineViewModel(topHeadlineRepository, dispatcherProvider, networkHelper)
             viewModel.uiState.test {
                 assertEquals(
                     UiState.Error(IllegalStateException(errorMsg).toString()),
-                    awaitItem())
+                    awaitItem()
+                )
                 cancelAndConsumeRemainingEvents()
             }
             verify(topHeadlineRepository, times(1)).getTopHeadlines(AppConstant.DEFAULT_COUNTRY)
@@ -72,7 +79,7 @@ class TopHeadlineViewModelTest {
     }
 
     @After
-    fun tearDown(){
+    fun tearDown() {
         /*if required when you have to stop/close something like livedata kind of thing*/
     }
 

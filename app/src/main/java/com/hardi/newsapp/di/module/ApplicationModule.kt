@@ -13,13 +13,13 @@ import com.hardi.newsapp.utils.AppConstant.BASE_URL
 import com.hardi.newsapp.utils.AppConstant.DATABASE_NAME
 import com.hardi.newsapp.utils.DefaultDispatcherProvider
 import com.hardi.newsapp.utils.DispatcherProvider
+import com.hardi.newsapp.utils.internetcheck.InternetConnected
+import com.hardi.newsapp.utils.internetcheck.NetworkHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import me.amitshekhar.newsapp.utils.InternetConnected
-import me.amitshekhar.newsapp.utils.NetworkHelper
 import me.hardi.newsapp.data.local.AppRoomDataBase
 import me.hardi.newsapp.data.local.AppRoomDatabaseService
 import me.hardi.newsapp.data.local.DatabaseService

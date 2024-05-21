@@ -1,4 +1,4 @@
-package me.amitshekhar.newsapp.utils
+package com.hardi.newsapp.utils.internetcheck
 
 import android.content.Context
 import android.net.ConnectivityManager

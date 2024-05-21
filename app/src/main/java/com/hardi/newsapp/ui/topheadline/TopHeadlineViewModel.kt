@@ -2,11 +2,11 @@ package com.hardi.newsapp.ui.topheadline
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hardi.newsapp.data.model.Article
 import com.hardi.newsapp.data.repository.TopHeadlineRepository
 import com.hardi.newsapp.ui.base.UiState
 import com.hardi.newsapp.utils.AppConstant
 import com.hardi.newsapp.utils.DispatcherProvider
+import com.hardi.newsapp.utils.internetcheck.NetworkHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import me.amitshekhar.newsapp.utils.NetworkHelper
 import me.hardi.newsapp.data.local.entity.ArticleEntity
 import javax.inject.Inject
 
