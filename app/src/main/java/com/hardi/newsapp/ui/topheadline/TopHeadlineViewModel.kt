@@ -21,7 +21,7 @@ import javax.inject.Inject
 class TopHeadlineViewModel @Inject constructor(
     private val topHeadlineRepository: TopHeadlineRepository,
     private val dispatcherProvider: DispatcherProvider,
-    networkHelper: NetworkHelper
+    private val networkHelper: NetworkHelper
 ) :
     ViewModel() {
 
@@ -37,12 +37,12 @@ class TopHeadlineViewModel @Inject constructor(
         }
     }
 
-    private fun fetchNews() {
+    fun fetchNews() {
         viewModelScope.launch(dispatcherProvider.main) {
             topHeadlineRepository.getTopHeadlines(AppConstant.DEFAULT_COUNTRY)
                 .flowOn(dispatcherProvider.io)
-                .catch { e ->
-                    _uiState.value = UiState.Error(e.toString())
+                .catch {e ->
+                    _uiState.value = UiState.Error(e)
                 }.collect {
                     _uiState.value = UiState.Success(it)
                 }
@@ -53,8 +53,8 @@ class TopHeadlineViewModel @Inject constructor(
         viewModelScope.launch {
             topHeadlineRepository.getArticlesDirectlyFromDB()
                 .flowOn(Dispatchers.IO)
-                .catch { e ->
-                    _uiState.value = UiState.Error(e.toString())
+                .catch {
+                    _uiState.value = UiState.Error(it)
                 }.collect {
                     _uiState.value = UiState.Success(it)
                 }

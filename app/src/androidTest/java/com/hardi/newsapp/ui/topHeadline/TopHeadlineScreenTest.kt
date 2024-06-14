@@ -26,7 +26,9 @@ class TopHeadlineScreenTest {
         composeTestRule.setContent {
             TopHeadlineScreen(
                 uiState = UiState.Loading,
-                onNewsClick = {})
+                onNewsClick = {},
+                viewModel = viewModel
+            )
         }
 
         composeTestRule
@@ -39,7 +41,9 @@ class TopHeadlineScreenTest {
         composeTestRule.setContent {
             TopHeadlineScreen(
                 uiState = UiState.Success(testArticleList),
-                onNewsClick = {})
+                onNewsClick = {},
+                viewModel = viewModel
+            )
         }
 
         composeTestRule
@@ -73,7 +77,9 @@ class TopHeadlineScreenTest {
         composeTestRule.setContent {
             TopHeadlineScreen(
                 uiState = UiState.Error(errorMsg),
-                onNewsClick = {})
+                onNewsClick = {},
+                viewModel = viewModel
+            )
         }
 
         composeTestRule

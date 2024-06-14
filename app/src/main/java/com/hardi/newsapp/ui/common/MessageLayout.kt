@@ -1,9 +1,15 @@
 package com.hardi.newsapp.ui.common
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -49,6 +55,32 @@ fun ShowError(text: String) {
                 .align(Alignment.Center)
                 .padding(5.dp)
         )
+    }
+}
+
+@Composable
+fun ShowErrorView(
+    text: String,
+    onRetryClick: () -> Unit = {}) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
+        verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.titleMedium,
+            color = Color.Red
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+        Button(
+            onClick = { onRetryClick() },
+            shape = RoundedCornerShape(10.dp)
+        ) {
+            Text(text = stringResource(R.string.retry))
+        }
     }
 }
 

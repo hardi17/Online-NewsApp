@@ -58,7 +58,7 @@ class SearchViewModel @Inject constructor(
                     _uiState.value = UiState.Loading
                     return@flatMapLatest searchNewsRepository.getSearchNews(it)
                         .catch { e ->
-                            _uiState.value = UiState.Error(e.toString())
+                            _uiState.value = UiState.Error(e)
                         }
                 }
                 .flowOn(dispatcherProvider.io)
