@@ -13,6 +13,7 @@ android {
     defaultConfig {
         applicationId "com.hardi.newsapp"
         minSdk 21
+        //noinspection OldTargetApi
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -23,7 +24,7 @@ android {
 
     buildTypes {
         debug{
-            buildConfigField("String", "API_KEY", "\"c02ab86e9761496faebbf29d2c96fb06\"")
+            buildConfigField("String", "API_KEY", "\"API KEY\"")
         }
         release {
             minifyEnabled false
