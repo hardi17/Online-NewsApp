@@ -165,12 +165,11 @@ An online news app makes it easy to read news articles on the intdernet. It offe
                     NewsWorkManager.kt
 
 ```
-# If this project helps you in anyway, show your love ❤️ by putting a ⭐ on this project ✌️
+If this project helps you in anyway, show your love ❤️ by putting a ⭐ on this project ✌️
 
-## Contributing to the News App project
-Feel free to improve the current project and all pull requests are welcome 😄.
-
-You can connect with me on:
+## Hi there! 👋
+I’m Hardi Rachh, an experienced Android developer who loves exploring new frameworks and tools.
+Always open to connect and collaborate, feel free to reach out to me on: 😊
 
 LinkedIn : https://www.linkedin.com/in/hardi-r/
 
